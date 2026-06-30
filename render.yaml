@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: agri-ai-gateway
+    env: docker
+    rootDir: backend
+    dockerfilePath: Dockerfile
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: MONGODB_URI
+        sync: false # Set this securely in the Render dashboard
+    plan: free

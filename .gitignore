@@ -1,0 +1,16 @@
+# Dependency directories
+node_modules/
+.venv/
+.env
+.firebase/
+
+# Build outputs
+dist/
+build/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
