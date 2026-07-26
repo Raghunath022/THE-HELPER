@@ -26,6 +26,103 @@ const MOCK_SMART_CARDS = {
   }
 };
 
+// Crops required parameter metadata (for suitability checks)
+const CROP_DATABASE = {
+  rice: { 
+    name: 'Rice (Paddy)',
+    ph: { min: 5.5, max: 7.0, optimal: 6.0 }, 
+    temperature: { min: 20, max: 35, optimal: 25 }, 
+    rainfall: { min: 1000, max: 2000, optimal: 1200 },
+    growthPeriod: 120,
+    yield: '3.0 - 8.0 tons/ha'
+  },
+  wheat: { 
+    name: 'Wheat',
+    ph: { min: 6.0, max: 7.5, optimal: 6.8 }, 
+    temperature: { min: 15, max: 25, optimal: 20 }, 
+    rainfall: { min: 350, max: 700, optimal: 500 },
+    growthPeriod: 90,
+    yield: '2.0 - 6.0 tons/ha'
+  },
+  maize: { 
+    name: 'Maize (Corn)',
+    ph: { min: 6.0, max: 7.0, optimal: 6.5 }, 
+    temperature: { min: 18, max: 30, optimal: 24 }, 
+    rainfall: { min: 500, max: 1200, optimal: 800 },
+    growthPeriod: 110,
+    yield: '4.0 - 12.0 tons/ha'
+  },
+  cotton: { 
+    name: 'Cotton',
+    ph: { min: 6.0, max: 7.5, optimal: 6.8 }, 
+    temperature: { min: 22, max: 32, optimal: 27 }, 
+    rainfall: { min: 500, max: 1000, optimal: 750 },
+    growthPeriod: 150,
+    yield: '1.5 - 3.5 tons/ha'
+  },
+  pomegranate: { 
+    name: 'Pomegranate',
+    ph: { min: 5.5, max: 7.5, optimal: 6.5 }, 
+    temperature: { min: 25, max: 35, optimal: 30 }, 
+    rainfall: { min: 500, max: 800, optimal: 650 },
+    growthPeriod: 240,
+    yield: '12.0 - 20.0 tons/ha'
+  },
+  groundnut: { 
+    name: 'Groundnut',
+    ph: { min: 5.5, max: 6.5, optimal: 6.0 }, 
+    temperature: { min: 20, max: 30, optimal: 25 }, 
+    rainfall: { min: 500, max: 1000, optimal: 700 },
+    growthPeriod: 120,
+    yield: '1.5 - 3.0 tons/ha'
+  },
+  mango: { 
+    name: 'Mango Orchard',
+    ph: { min: 5.5, max: 7.5, optimal: 6.5 }, 
+    temperature: { min: 24, max: 35, optimal: 28 }, 
+    rainfall: { min: 750, max: 2500, optimal: 1500 },
+    growthPeriod: 365,
+    yield: '8.0 - 22.0 tons/ha'
+  }
+};
+
+const calculateSuitability = (cropKey, inputs) => {
+  const crop = CROP_DATABASE[cropKey];
+  if (!crop) return 0;
+  
+  let score = 0;
+  let totalWeight = 0;
+  
+  // pH Level suitability (weight: 35%)
+  const userPh = parseFloat(inputs.ph) || 6.5;
+  const phDiff = Math.abs(userPh - crop.ph.optimal);
+  const phScore = Math.max(0, 100 - phDiff * 50);
+  score += phScore * 0.35;
+  totalWeight += 0.35;
+  
+  // Temperature suitability (weight: 25%)
+  const userTemp = parseFloat(inputs.temperature) || 24;
+  const tempDiff = Math.abs(userTemp - crop.temperature.optimal);
+  const tempScore = Math.max(0, 100 - tempDiff * 10);
+  score += tempScore * 0.25;
+  totalWeight += 0.25;
+  
+  // Rainfall suitability (weight: 40%)
+  const userRain = parseFloat(inputs.rainfall) || 120;
+  let rainScore = 0;
+  if (userRain >= crop.rainfall.min && userRain <= crop.rainfall.max) {
+    rainScore = 100;
+  } else {
+    const optimal = crop.rainfall.optimal;
+    const diff = Math.abs(userRain - optimal);
+    rainScore = Math.max(0, 100 - (diff / (optimal || 1)) * 100);
+  }
+  score += rainScore * 0.40;
+  totalWeight += 0.40;
+  
+  return Math.round(score);
+};
+
 export default function CropPredictor({ user, token, backendUrl }) {
   const { t } = useTranslation();
 
@@ -723,13 +820,97 @@ export default function CropPredictor({ user, token, backendUrl }) {
                 </div>
               )}
 
-              {/* Advisory notes */}
-              <div style={{ display: 'flex', gap: '10px', background: 'rgba(82, 183, 136, 0.04)', border: '1px solid rgba(82, 183, 136, 0.1)', borderRadius: '10px', padding: '14px', marginTop: '8px', fontSize: '0.8rem', lineHeight: 1.4, color: 'hsl(var(--text-secondary))' }}>
-                <Info size={16} style={{ color: '#52b788', flexShrink: 0, marginTop: '2px' }} />
-                <div>
-                  <strong>Decision Engine Guidance:</strong> Sowing <strong>{result.recommendation?.crop || result.crop}</strong> in <strong>{formData.ph} pH</strong> soil during current temperature conditions minimizes seedling mortality. Optimize NPK fertilizer feeds as scheduled in the operations planner.
-                </div>
+              {/* Detailed Growth Match Scorecard */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginTop: '8px' }}>
+                <h4 style={{ fontSize: '0.95rem', color: '#fff', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <Sprout size={16} style={{ color: '#52b788' }} />
+                  Crop Suitability Rankings & Targets
+                </h4>
+
+                {(() => {
+                  const inputs = {
+                    ph: parseFloat(formData.ph) || 6.5,
+                    temperature: parseFloat(formData.temperature) || 24,
+                    rainfall: parseFloat(formData.rainfall) || 120
+                  };
+                  
+                  // Calculate and sort top matching crops
+                  const rankedCrops = Object.keys(CROP_DATABASE).map(key => {
+                    const suit = calculateSuitability(key, inputs);
+                    return { key, ...CROP_DATABASE[key], suitability: suit };
+                  }).sort((a, b) => b.suitability - a.suitability);
+
+                  return (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                      {rankedCrops.slice(0, 3).map((crop, index) => {
+                        const isFirst = index === 0;
+                        return (
+                          <div 
+                            key={crop.key} 
+                            style={{ 
+                              padding: '12px 14px', 
+                              borderRadius: '12px',
+                              border: isFirst ? '1.5px solid rgba(82, 183, 136, 0.25)' : '1px solid rgba(255,255,255,0.05)',
+                              background: isFirst ? 'rgba(82, 183, 136, 0.05)' : 'rgba(255,255,255,0.01)',
+                              display: 'flex',
+                              flexDirection: 'column',
+                              gap: '8px'
+                            }}
+                          >
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                              <strong style={{ fontSize: '0.85rem', color: '#fff' }}>
+                                #{index + 1} {crop.name}
+                              </strong>
+                              <span 
+                                style={{ 
+                                  fontSize: '0.72rem', 
+                                  fontWeight: 700, 
+                                  color: crop.suitability >= 80 ? '#52b788' : crop.suitability >= 60 ? '#ffa726' : '#e63946',
+                                }}
+                              >
+                                {crop.suitability}% Match
+                              </span>
+                            </div>
+
+                            {/* Progress bar */}
+                            <div style={{ width: '100%', height: '5px', backgroundColor: 'rgba(255,255,255,0.05)', borderRadius: '10px', overflow: 'hidden' }}>
+                              <div 
+                                style={{ 
+                                  width: `${crop.suitability}%`, 
+                                  height: '100%', 
+                                  backgroundColor: crop.suitability >= 80 ? '#52b788' : crop.suitability >= 60 ? '#ffa726' : '#e63946',
+                                  borderRadius: '10px'
+                                }} 
+                              />
+                            </div>
+
+                            {/* Info checklist */}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', fontSize: '0.72rem', color: 'hsl(var(--text-secondary))', borderTop: '1px solid rgba(255,255,255,0.03)', paddingTop: '6px', marginTop: '2px' }}>
+                              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <span>Yield Potential:</span>
+                                <span style={{ color: '#fff', fontWeight: 600 }}>{crop.yield}</span>
+                              </div>
+                              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <span>Cycle Duration:</span>
+                                <span style={{ color: '#fff', fontWeight: 600 }}>{crop.growthPeriod} Days</span>
+                              </div>
+                              <div style={{ color: 'hsl(var(--text-muted))', fontSize: '0.68rem', marginTop: '4px' }}>
+                                Target vs Your Soil Metrics:
+                              </div>
+                              <ul style={{ margin: 0, paddingLeft: '14px', listStyleType: 'disc', color: 'hsl(var(--text-secondary))' }}>
+                                <li>pH Scale: {crop.ph.min}-{crop.ph.max} (Actual: {inputs.ph})</li>
+                                <li>Temperature: {crop.temperature.min}-{crop.temperature.max}°C (Actual: {inputs.temperature}°C)</li>
+                                <li>Seasonal Rain: {crop.rainfall.min}-{crop.rainfall.max}mm (Actual: {inputs.rainfall}mm)</li>
+                              </ul>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                })()}
               </div>
+
             </div>
 
             <button 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Zap, RefreshCw, Sprout, FlaskConical, Calculator, Camera, Sun, Coins, MessageCircle, ArrowRight } from 'lucide-react';
+import { Zap, RefreshCw, Sprout, FlaskConical, Calculator, Camera, Sun, Coins, MessageCircle, ArrowRight, Droplets, Thermometer, Cloud, Leaf, Cpu } from 'lucide-react';
 import { useToast } from '../useToast';
 
 function useCounter(target, duration = 1800, refreshKey = 0) {
@@ -40,6 +40,42 @@ export default function Dashboard({ user, token, backendUrl, onNavigate }) {
   const [farmersCount, farmersRef] = useCounter(12400, 1500, refreshKey);
   const [queriesCount, queriesRef] = useCounter(89200, 1800, refreshKey);
   const [cropsCount,   cropsRef]   = useCounter(47, 1200, refreshKey);
+
+  // Real-time IoT Sensor Simulation State
+  const [sensors, setSensors] = useState([
+    { label: 'Soil Moisture', value: '62%', status: 'optimal', iconKey: 'moisture' },
+    { label: 'Air Temperature', value: '24.5°C', status: 'optimal', iconKey: 'temp' },
+    { label: 'Air Humidity', value: '70%', status: 'optimal', iconKey: 'humidity' },
+    { label: 'Soil Nitrogen', value: '42 ppm', status: 'warning', iconKey: 'nitrogen' },
+    { label: 'Soil pH Level', value: '6.4', status: 'optimal', iconKey: 'ph' },
+    { label: 'Solar Light', value: '950 lux', status: 'optimal', iconKey: 'light' }
+  ]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setSensors([
+        { label: 'Soil Moisture', value: Math.round(55 + Math.random() * 20) + '%', status: 'optimal', iconKey: 'moisture' },
+        { label: 'Air Temperature', value: (22 + Math.random() * 6).toFixed(1) + '°C', status: 'optimal', iconKey: 'temp' },
+        { label: 'Air Humidity', value: Math.round(60 + Math.random() * 20) + '%', status: 'optimal', iconKey: 'humidity' },
+        { label: 'Soil Nitrogen', value: Math.round(30 + Math.random() * 20) + ' ppm', status: 'warning', iconKey: 'nitrogen' },
+        { label: 'Soil pH Level', value: (6.2 + Math.random() * 0.8).toFixed(1), status: 'optimal', iconKey: 'ph' },
+        { label: 'Solar Light', value: Math.round(800 + Math.random() * 400) + ' lux', status: 'optimal', iconKey: 'light' }
+      ]);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const getSensorIcon = (key) => {
+    switch (key) {
+      case 'moisture': return <Droplets size={16} style={{ color: '#52b788' }} />;
+      case 'temp': return <Thermometer size={16} style={{ color: '#52b788' }} />;
+      case 'humidity': return <Cloud size={16} style={{ color: '#52b788' }} />;
+      case 'nitrogen': return <Leaf size={16} style={{ color: '#ffa726' }} />;
+      case 'ph': return <FlaskConical size={16} style={{ color: '#52b788' }} />;
+      case 'light': return <Sun size={16} style={{ color: '#52b788' }} />;
+      default: return <Zap size={16} />;
+    }
+  };
 
   const handleRefresh = () => {
     setRefreshKey(prev => prev + 1);
@@ -197,6 +233,32 @@ export default function Dashboard({ user, token, backendUrl, onNavigate }) {
             </span>
           </div>
         </div>
+
+        {/* ── Live IoT Farm Dashboard Section ── */}
+        <div className="card-glass" style={{ marginTop: '28px', padding: '24px' }}>
+          <h2 style={{ fontSize: '1.25rem', color: '#fff', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+            <Cpu size={22} style={{ color: '#52b788' }} />
+            Live Farm Dashboard (IoT Telemetry)
+          </h2>
+          <p style={{ fontSize: '0.82rem', color: 'hsl(var(--text-secondary))', marginBottom: '20px' }}>
+            Real-time simulated telemetry feeds from wireless agricultural sensor nodes deployed across your fields.
+          </p>
+          <div className="dashboard-sensor-grid">
+            {sensors.map((sensor, idx) => (
+              <div key={idx} className="sensor-value-card">
+                <div className="sensor-card-label">
+                  {getSensorIcon(sensor.iconKey)}
+                  {sensor.label}
+                </div>
+                <div className="sensor-card-value">{sensor.value}</div>
+                <div className={`sensor-badge-status ${sensor.status === 'optimal' ? 'sensor-status-optimal' : 'sensor-status-warning'}`}>
+                  {sensor.status === 'optimal' ? 'Optimal' : 'Monitor'}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
       </div>
     </div>
   );

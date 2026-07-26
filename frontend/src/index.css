@@ -1617,3 +1617,71 @@ h1, h2, h3, h4, h5, h6, .font-display {
   }
 }
 
+/* Live IoT Sensor Grid */
+.dashboard-sensor-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.sensor-value-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  padding: 18px 12px;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s, border-color 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.sensor-value-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(82, 183, 136, 0.25);
+}
+
+.sensor-card-value {
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: #52b788;
+  margin: 6px 0;
+  font-family: monospace;
+}
+
+.sensor-card-label {
+  font-size: 0.8rem;
+  color: hsl(var(--text-secondary));
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: center;
+}
+
+.sensor-badge-status {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.sensor-status-optimal {
+  background: rgba(82, 183, 136, 0.15);
+  color: #52b788;
+  border: 1px solid rgba(82, 183, 136, 0.25);
+}
+
+.sensor-status-warning {
+  background: rgba(251, 140, 0, 0.15);
+  color: #ffa726;
+  border: 1px solid rgba(251, 140, 0, 0.25);
+}
+
