@@ -404,7 +404,73 @@ export default function CropPredictor({ user, token, backendUrl }) {
       {/* ── LEFT COLUMN: Crop recommendation inputs ── */}
       <div className="flex flex-col gap-6">
         
+        {/* Beginner Soil Presets Launcher */}
+        <div className="card-glass" style={{ background: 'linear-gradient(135deg, rgba(82, 183, 136, 0.04) 0%, rgba(6, 26, 18, 0.45) 100%)' }}>
+          <h3 style={{ fontSize: '1.15rem', color: '#fff', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Sparkles size={20} style={{ color: '#ffa726' }} />
+            Beginner Helper: Quick Soil Presets
+          </h3>
+          <p style={{ fontSize: '0.8rem', color: 'hsl(var(--text-secondary))', marginBottom: '16px', lineHeight: 1.45 }}>
+            Don't have a soil lab report yet? Click any soil preset below to automatically fill in standard values for common Indian agricultural soils:
+          </p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+            <button
+              type="button"
+              className="quick-chip"
+              style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', padding: '10px 16px', borderRadius: '12px', border: '1px solid rgba(82, 183, 136, 0.2)', width: 'calc(50% - 5px)', height: 'auto', whiteSpace: 'normal', textAlign: 'left' }}
+              onClick={() => {
+                setFormData({ N: '90', P: '45', K: '40', ph: '6.2', temperature: '24.2', humidity: '78.5', rainfall: '145.3' });
+                setSuccessMsg("Filled with Loamy Alluvial Soil averages (Uttar Pradesh / Punjab)");
+                setError('');
+              }}
+            >
+              <strong style={{ fontSize: '0.82rem', color: '#fff' }}>🌾 Loamy Alluvial Soil</strong>
+              <span style={{ fontSize: '0.68rem', color: 'hsl(var(--text-muted))', marginTop: '2px' }}>Great for Wheat, Rice, Sugarcane</span>
+            </button>
 
+            <button
+              type="button"
+              className="quick-chip"
+              style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', padding: '10px 16px', borderRadius: '12px', border: '1px solid rgba(82, 183, 136, 0.2)', width: 'calc(50% - 5px)', height: 'auto', whiteSpace: 'normal', textAlign: 'left' }}
+              onClick={() => {
+                setFormData({ N: '130', P: '28', K: '85', ph: '5.8', temperature: '28.0', humidity: '86.4', rainfall: '215.8' });
+                setSuccessMsg("Filled with Clayey Paddy Soil averages (Tamil Nadu / Bengal)");
+                setError('');
+              }}
+            >
+              <strong style={{ fontSize: '0.82rem', color: '#fff' }}>💧 Clayey Paddy Soil</strong>
+              <span style={{ fontSize: '0.68rem', color: 'hsl(var(--text-muted))', marginTop: '2px' }}>Great for Paddy/Rice, Jute</span>
+            </button>
+
+            <button
+              type="button"
+              className="quick-chip"
+              style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', padding: '10px 16px', borderRadius: '12px', border: '1px solid rgba(82, 183, 136, 0.2)', width: 'calc(50% - 5px)', height: 'auto', whiteSpace: 'normal', textAlign: 'left' }}
+              onClick={() => {
+                setFormData({ N: '80', P: '35', K: '60', ph: '7.2', temperature: '27.4', humidity: '62.0', rainfall: '98.5' });
+                setSuccessMsg("Filled with Black Cotton Soil averages (Maharashtra / Gujarat)");
+                setError('');
+              }}
+            >
+              <strong style={{ fontSize: '0.82rem', color: '#fff' }}>☁️ Black Cotton Soil</strong>
+              <span style={{ fontSize: '0.68rem', color: 'hsl(var(--text-muted))', marginTop: '2px' }}>Great for Cotton, Soybeans</span>
+            </button>
+
+            <button
+              type="button"
+              className="quick-chip"
+              style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', padding: '10px 16px', borderRadius: '12px', border: '1px solid rgba(82, 183, 136, 0.2)', width: 'calc(50% - 5px)', height: 'auto', whiteSpace: 'normal', textAlign: 'left' }}
+              onClick={() => {
+                setFormData({ N: '65', P: '30', K: '45', ph: '6.8', temperature: '26.8', humidity: '55.3', rainfall: '85.2' });
+                setSuccessMsg("Filled with Sandy Arid Soil averages (Rajasthan / Haryana)");
+                setError('');
+              }}
+            >
+              <strong style={{ fontSize: '0.82rem', color: '#fff' }}>🏜️ Sandy Arid Soil</strong>
+              <span style={{ fontSize: '0.68rem', color: 'hsl(var(--text-muted))', marginTop: '2px' }}>Great for Millets, Groundnuts</span>
+            </button>
+          </div>
+        </div>
 
         {/* AI Soil Report Image OCR Scanner */}
         <div className="card-glass">
@@ -525,14 +591,23 @@ export default function CropPredictor({ user, token, backendUrl }) {
                 <div className="form-group" style={{ marginBottom: 0 }}>
                   <label className="input-label">Nitrogen (N)</label>
                   <input type="number" name="N" value={formData.N} onChange={handleChange} className="input-field" placeholder="e.g. 90" />
+                  <span style={{ fontSize: '0.68rem', color: 'hsl(var(--text-muted))', marginTop: '4px', display: 'block' }}>
+                    Deficit: &lt;50 | Healthy: 50-100
+                  </span>
                 </div>
                 <div className="form-group" style={{ marginBottom: 0 }}>
                   <label className="input-label">Phosphorus (P)</label>
                   <input type="number" name="P" value={formData.P} onChange={handleChange} className="input-field" placeholder="e.g. 42" />
+                  <span style={{ fontSize: '0.68rem', color: 'hsl(var(--text-muted))', marginTop: '4px', display: 'block' }}>
+                    Deficit: &lt;30 | Healthy: 30-60
+                  </span>
                 </div>
                 <div className="form-group" style={{ marginBottom: 0 }}>
                   <label className="input-label">Potassium (K)</label>
                   <input type="number" name="K" value={formData.K} onChange={handleChange} className="input-field" placeholder="e.g. 43" />
+                  <span style={{ fontSize: '0.68rem', color: 'hsl(var(--text-muted))', marginTop: '4px', display: 'block' }}>
+                    Deficit: &lt;35 | Healthy: 35-80
+                  </span>
                 </div>
               </div>
             </div>
@@ -543,18 +618,30 @@ export default function CropPredictor({ user, token, backendUrl }) {
                 <div className="form-group" style={{ marginBottom: 0 }}>
                   <label className="input-label flex items-center gap-1"><FlaskConical size={14}/> Soil pH Level</label>
                   <input type="number" step="0.1" name="ph" value={formData.ph} onChange={handleChange} className="input-field" placeholder="e.g. 6.5" />
+                  <span style={{ fontSize: '0.68rem', color: 'hsl(var(--text-muted))', marginTop: '4px', display: 'block' }}>
+                    Acidic: &lt;6.0 | Ideal: 6.0-7.2 | Alkaline: &gt;7.2
+                  </span>
                 </div>
                 <div className="form-group" style={{ marginBottom: 0 }}>
                   <label className="input-label flex items-center gap-1"><Thermometer size={14}/> Temperature (°C)</label>
                   <input type="number" step="0.1" name="temperature" value={formData.temperature} onChange={handleChange} className="input-field" placeholder="e.g. 20.8" />
+                  <span style={{ fontSize: '0.68rem', color: 'hsl(var(--text-muted))', marginTop: '4px', display: 'block' }}>
+                    Ideal range: 15°C - 35°C
+                  </span>
                 </div>
                 <div className="form-group" style={{ marginBottom: 0 }}>
                   <label className="input-label flex items-center gap-1"><Wind size={14}/> Humidity (%)</label>
                   <input type="number" step="0.1" name="humidity" value={formData.humidity} onChange={handleChange} className="input-field" placeholder="e.g. 82" />
+                  <span style={{ fontSize: '0.68rem', color: 'hsl(var(--text-muted))', marginTop: '4px', display: 'block' }}>
+                    Ideal range: 60% - 90%
+                  </span>
                 </div>
                 <div className="form-group" style={{ marginBottom: 0 }}>
                   <label className="input-label flex items-center gap-1"><Droplets size={14}/> Seasonal Rainfall (mm)</label>
                   <input type="number" step="0.1" name="rainfall" value={formData.rainfall} onChange={handleChange} className="input-field" placeholder="e.g. 202.9" />
+                  <span style={{ fontSize: '0.68rem', color: 'hsl(var(--text-muted))', marginTop: '4px', display: 'block' }}>
+                    Dry: &lt;100mm | Normal: 100-250mm
+                  </span>
                 </div>
               </div>
             </div>
