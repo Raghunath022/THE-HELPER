@@ -192,6 +192,59 @@ export default function App() {
           </div>
         </div>
 
+        {/* Middle: Horizontal Nav Links (Hidden on mobile) */}
+        <div className="header-nav-links">
+          <button 
+            className={`header-nav-link ${activeTab === 'dashboard' ? 'active' : ''}`}
+            onClick={() => handleTabChange('dashboard')}
+          >
+            <LayoutDashboard size={16} />
+            <span>{t('dashboard')}</span>
+          </button>
+          <button 
+            className={`header-nav-link ${activeTab === 'predictor' ? 'active' : ''}`}
+            onClick={() => handleTabChange('predictor')}
+          >
+            <Sprout size={16} />
+            <span>{t('cropRecommend')}</span>
+          </button>
+          <button 
+            className={`header-nav-link ${activeTab === 'fertilizer' ? 'active' : ''}`}
+            onClick={() => handleTabChange('fertilizer')}
+          >
+            <FlaskConical size={16} />
+            <span>{t('fertilizer')}</span>
+          </button>
+          <button 
+            className={`header-nav-link ${activeTab === 'yield' ? 'active' : ''}`}
+            onClick={() => handleTabChange('yield')}
+          >
+            <Calculator size={16} />
+            <span>{t('yieldPrediction')}</span>
+          </button>
+          <button 
+            className={`header-nav-link ${activeTab === 'weather' ? 'active' : ''}`}
+            onClick={() => handleTabChange('weather')}
+          >
+            <Sun size={16} />
+            <span>{t('weather')}</span>
+          </button>
+          <button 
+            className={`header-nav-link ${activeTab === 'disease' ? 'active' : ''}`}
+            onClick={() => handleTabChange('disease')}
+          >
+            <Camera size={16} />
+            <span>{t('diseaseCamera')}</span>
+          </button>
+          <button 
+            className={`header-nav-link ${activeTab === 'chat' ? 'active' : ''}`}
+            onClick={() => handleTabChange('chat')}
+          >
+            <MessageCircle size={16} />
+            <span>{t('aiChatAssistant')}</span>
+          </button>
+        </div>
+
         {/* Right: Language + Auth */}
         <div className="flex-center-y flex-gap-4">
           {/* Language Selector */}
