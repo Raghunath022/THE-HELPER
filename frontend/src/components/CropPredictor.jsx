@@ -29,60 +29,102 @@ const MOCK_SMART_CARDS = {
 // Crops required parameter metadata (for suitability checks)
 const CROP_DATABASE = {
   rice: { 
-    name: 'Rice (Paddy)',
+    name: 'Rice (Paddy)', emoji: '🌾',
     ph: { min: 5.5, max: 7.0, optimal: 6.0 }, 
     temperature: { min: 20, max: 35, optimal: 25 }, 
     rainfall: { min: 1000, max: 2000, optimal: 1200 },
     growthPeriod: 120,
-    yield: '3.0 - 8.0 tons/ha'
+    yield: '3–8 tons/ha',
+    steps: [
+      '🌱 Soak seeds 24hrs, then sow in nursery bed. Transplant 25-day-old seedlings into flooded field rows.',
+      '💧 Keep 5–10 cm water level in the field throughout growing season. Drain 2 weeks before harvest.',
+      '🌿 Apply urea (nitrogen) fertilizer 3 times: at planting, 30 days, and 60 days after transplant.',
+      '🌾 Harvest when grains turn golden-yellow (around day 110–120). Cut stalks and thresh immediately.'
+    ]
   },
   wheat: { 
-    name: 'Wheat',
+    name: 'Wheat', emoji: '🌾',
     ph: { min: 6.0, max: 7.5, optimal: 6.8 }, 
     temperature: { min: 15, max: 25, optimal: 20 }, 
     rainfall: { min: 350, max: 700, optimal: 500 },
     growthPeriod: 90,
-    yield: '2.0 - 6.0 tons/ha'
+    yield: '2–6 tons/ha',
+    steps: [
+      '🌱 Plough field 2–3 times. Sow seeds 5 cm deep in rows spaced 20 cm apart (October–November best).',
+      '💧 Water 6 times total: at sowing, crown root stage, tillering, jointing, flowering, and grain filling.',
+      '🌿 Apply DAP at sowing + urea top-dressing at 3 and 6 weeks. Weed 20–30 days after sowing.',
+      '🌾 Harvest when straw turns yellow and grains are hard (day 85–95). Use sickle or thresher machine.'
+    ]
   },
   maize: { 
-    name: 'Maize (Corn)',
+    name: 'Maize (Corn)', emoji: '🌽',
     ph: { min: 6.0, max: 7.0, optimal: 6.5 }, 
     temperature: { min: 18, max: 30, optimal: 24 }, 
     rainfall: { min: 500, max: 1200, optimal: 800 },
     growthPeriod: 110,
-    yield: '4.0 - 12.0 tons/ha'
+    yield: '4–12 tons/ha',
+    steps: [
+      '🌱 Sow 2 seeds per hole, 3 cm deep. Row spacing 60 cm, plant spacing 30 cm. Thin to 1 plant after 10 days.',
+      '💧 Water every 10–12 days. Critical stages: knee-high, tasseling, and silking — never let it dry then.',
+      '🌿 Apply nitrogen fertilizer in 3 splits. Remove weeds at 20 and 40 days after planting.',
+      '🌽 Harvest when husks dry brown and kernels are hard (day 100–115). Sun-dry cobs for 3–5 days before storage.'
+    ]
   },
   cotton: { 
-    name: 'Cotton',
+    name: 'Cotton', emoji: '🌿',
     ph: { min: 6.0, max: 7.5, optimal: 6.8 }, 
     temperature: { min: 22, max: 32, optimal: 27 }, 
     rainfall: { min: 500, max: 1000, optimal: 750 },
     growthPeriod: 150,
-    yield: '1.5 - 3.5 tons/ha'
+    yield: '1.5–3.5 tons/ha',
+    steps: [
+      '🌱 Deep plough twice. Sow seeds 3–4 cm deep after soaking overnight. Row spacing 90 cm × 60 cm.',
+      '💧 Water every 15 days. Avoid waterlogging — ensure furrow drainage between rows.',
+      '🌿 Apply phosphorus at sowing. Add nitrogen and potassium at 45 and 90 days. Spray for bollworm if needed.',
+      '🌿 Pick open white bolls by hand every 5–7 days from day 140 onward. 3–5 picking rounds per season.'
+    ]
   },
   pomegranate: { 
-    name: 'Pomegranate',
+    name: 'Pomegranate', emoji: '🍎',
     ph: { min: 5.5, max: 7.5, optimal: 6.5 }, 
     temperature: { min: 25, max: 35, optimal: 30 }, 
     rainfall: { min: 500, max: 800, optimal: 650 },
     growthPeriod: 240,
-    yield: '12.0 - 20.0 tons/ha'
+    yield: '12–20 tons/ha',
+    steps: [
+      '🌱 Dig 60×60×60 cm pits. Plant 1-year-old rooted cuttings with spacing 4.5 m × 3 m. Mix FYM in pit.',
+      '💧 Drip irrigation is best — 20–30 litres per plant per day in summer, less in winter.',
+      '🌿 Prune to single-stem in year 1. Remove suckers. Apply NPK fertilizer every 4 months.',
+      '🍎 First harvest in year 3. Pick fruits when skin turns dark red and makes metallic sound when tapped (day 120–180 after flowering).'
+    ]
   },
   groundnut: { 
-    name: 'Groundnut',
+    name: 'Groundnut', emoji: '🥜',
     ph: { min: 5.5, max: 6.5, optimal: 6.0 }, 
     temperature: { min: 20, max: 30, optimal: 25 }, 
     rainfall: { min: 500, max: 1000, optimal: 700 },
     growthPeriod: 120,
-    yield: '1.5 - 3.0 tons/ha'
+    yield: '1.5–3 tons/ha',
+    steps: [
+      '🌱 Shell pods and sow seeds 5 cm deep in sandy-loam soil. Row spacing 30 cm × 10 cm (June–July).',
+      '💧 Water every 10 days. Extra watering at flowering (day 30) and pegging stage (day 45–60). Stop 2 weeks before harvest.',
+      '🌿 Apply gypsum at flowering stage — this fills pods. Light weeding at 20 and 40 days after sowing.',
+      '🥜 Harvest when leaves turn yellow (day 115–125). Uproot plants, shake off soil, dry in shade for 3–4 days.'
+    ]
   },
   mango: { 
-    name: 'Mango Orchard',
+    name: 'Mango', emoji: '🥭',
     ph: { min: 5.5, max: 7.5, optimal: 6.5 }, 
     temperature: { min: 24, max: 35, optimal: 28 }, 
     rainfall: { min: 750, max: 2500, optimal: 1500 },
     growthPeriod: 365,
-    yield: '8.0 - 22.0 tons/ha'
+    yield: '8–22 tons/ha',
+    steps: [
+      '🌱 Dig 1m × 1m × 1m pits. Plant grafted saplings with 10 m spacing. Add FYM + soil + sand mix.',
+      '💧 Water every 3 days for first 2 years. Mature trees need watering only at fruit development stage.',
+      '🌿 Apply NPK and micronutrients twice a year (June + October). Prune dead branches after harvest.',
+      '🥭 Harvest in April–June when fruit color changes and it separates easily. Handle gently, store in shade.'
+    ]
   }
 };
 
@@ -754,12 +796,12 @@ export default function CropPredictor({ user, token, backendUrl }) {
             {loading ? (
               <>
                 <Loader className="animate-spin" size={18} />
-                Running Recommendation Inference...
+                Finding best crops for you...
               </>
             ) : (
               <>
                 <Sparkles size={18} />
-                Generate Optimal Crop Match
+                🌱 Find Best Crops for Me
               </>
             )}
           </button>
@@ -771,154 +813,90 @@ export default function CropPredictor({ user, token, backendUrl }) {
       <div className="flex flex-col gap-6">
         
         {result ? (
-          <div className="card-glass animate-fade-in" style={{ border: '1.5px solid rgba(82, 183, 136, 0.25)', background: 'linear-gradient(135deg, rgba(82, 183, 136, 0.08) 0%, rgba(6, 26, 18, 0.5) 100%)' }}>
-            <div style={{ textAlign: 'center', padding: '12px 0 24px' }}>
-              <span className="badge badge-emerald" style={{ fontSize: '0.75rem', padding: '4px 10px', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '12px' }}>
-                Optimal Match Found
-              </span>
-              
-              <p style={{ fontSize: '0.9rem', color: 'hsl(var(--text-muted))', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>
-                Recommended Crop
-              </p>
-              
-              <h2 className="text-gradient" style={{ fontSize: '3rem', fontWeight: 900, textTransform: 'capitalize', margin: '8px 0 16px' }}>
-                {result.recommendation?.crop || result.crop || 'Paddy'}
-              </h2>
+          <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
 
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '30px', padding: '8px 18px', fontSize: '0.85rem', color: '#fff', fontWeight: 600 }}>
-                <Sparkles size={14} style={{ color: '#52b788' }} />
-                <span>Confidence score: {result.recommendation?.confidence ? `${(result.recommendation.confidence * 100).toFixed(1)}%` : '92.4%'}</span>
-              </div>
+            {/* Header */}
+            <div style={{ textAlign: 'center', padding: '18px 16px 12px', background: 'linear-gradient(135deg, rgba(82,183,136,0.12) 0%, rgba(6,26,18,0.6) 100%)', borderRadius: '16px', border: '1.5px solid rgba(82,183,136,0.25)' }}>
+              <div style={{ fontSize: '2rem', marginBottom: '6px' }}>🌱</div>
+              <h3 style={{ fontSize: '1.3rem', color: '#fff', fontWeight: 800, margin: '0 0 4px' }}>Best Crops for Your Soil</h3>
+              <p style={{ fontSize: '0.82rem', color: 'hsl(var(--text-secondary))', margin: 0 }}>Tap any crop below to see how to grow it step by step</p>
             </div>
 
-            {/* Diagnostics Stats */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', borderTop: '1px solid rgba(82, 183, 136, 0.12)', paddingTop: '20px' }}>
-              <h4 style={{ fontSize: '0.95rem', color: '#fff', fontWeight: 700, marginBottom: '4px' }}>Agronomic Analysis & Telemetry Log</h4>
-              
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-                <div style={{ background: 'rgba(255,255,255,0.02)', padding: '10px 14px', borderRadius: '10px' }}>
-                  <span style={{ fontSize: '0.7rem', color: 'hsl(var(--text-muted))', display: 'block' }}>N-P-K Levels</span>
-                  <span style={{ fontSize: '0.9rem', color: '#fff', fontWeight: 600 }}>{formData.N} - {formData.P} - {formData.K}</span>
-                </div>
-                <div style={{ background: 'rgba(255,255,255,0.02)', padding: '10px 14px', borderRadius: '10px' }}>
-                  <span style={{ fontSize: '0.7rem', color: 'hsl(var(--text-muted))', display: 'block' }}>Soil Acidity (pH)</span>
-                  <span style={{ fontSize: '0.9rem', color: '#52b788', fontWeight: 600 }}>{formData.ph} pH</span>
-                </div>
-              </div>
+            {/* Crop Cards List */}
+            {(() => {
+              const inputs = {
+                ph: parseFloat(formData.ph) || 6.5,
+                temperature: parseFloat(formData.temperature) || 24,
+                rainfall: parseFloat(formData.rainfall) || 120
+              };
+              const rankedCrops = Object.keys(CROP_DATABASE).map(key => {
+                const suit = calculateSuitability(key, inputs);
+                return { key, ...CROP_DATABASE[key], suitability: suit };
+              }).sort((a, b) => b.suitability - a.suitability);
 
-              {/* Mandi price matching block */}
-              {result.market && (
-                <div style={{ background: 'rgba(255,255,255,0.02)', padding: '14px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.04)' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                    <span style={{ fontSize: '0.8rem', color: 'hsl(var(--text-secondary))', fontWeight: 500 }}>Live eNAM Mandi Reference</span>
-                    <span style={{ fontSize: '0.68rem', color: 'hsl(var(--text-muted))' }}>(Agmarknet API)</span>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-                    <span style={{ fontSize: '1.25rem', fontWeight: 700, color: '#ffa726' }}>₹{(result.market.price || 22000).toLocaleString('en-IN')}/Ton</span>
-                    <span style={{ fontSize: '0.72rem', color: '#52b788', fontWeight: 600 }}>Market Trend: Strong</span>
-                  </div>
-                </div>
-              )}
+              return rankedCrops.map((crop, index) => {
+                const isTop = index === 0;
+                const color = crop.suitability >= 80 ? '#52b788' : crop.suitability >= 60 ? '#ffa726' : '#e63946';
+                const label = crop.suitability >= 80 ? '✅ Excellent' : crop.suitability >= 60 ? '⚠️ Good' : '❌ Poor';
+                return (
+                  <details
+                    key={crop.key}
+                    style={{
+                      borderRadius: '14px',
+                      border: isTop ? `2px solid ${color}` : '1px solid rgba(255,255,255,0.07)',
+                      background: isTop ? 'rgba(82,183,136,0.06)' : 'rgba(255,255,255,0.02)',
+                      overflow: 'hidden',
+                      cursor: 'pointer'
+                    }}
+                    open={isTop}
+                  >
+                    <summary style={{ listStyle: 'none', padding: '14px 16px', display: 'flex', alignItems: 'center', gap: '12px', userSelect: 'none' }}>
+                      <span style={{ fontSize: '1.6rem', minWidth: '34px', textAlign: 'center' }}>{crop.emoji}</span>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                          <strong style={{ fontSize: '0.95rem', color: '#fff' }}>
+                            {isTop ? '🏆 ' : `#${index + 1} `}{crop.name}
+                          </strong>
+                          <span style={{ fontSize: '0.78rem', fontWeight: 700, color, background: `${color}22`, padding: '2px 8px', borderRadius: '20px' }}>
+                            {crop.suitability}% {label}
+                          </span>
+                        </div>
+                        {/* Match progress bar */}
+                        <div style={{ width: '100%', height: '6px', backgroundColor: 'rgba(255,255,255,0.07)', borderRadius: '10px', overflow: 'hidden' }}>
+                          <div style={{ width: `${crop.suitability}%`, height: '100%', backgroundColor: color, borderRadius: '10px', transition: 'width 0.6s ease' }} />
+                        </div>
+                        <div style={{ display: 'flex', gap: '12px', marginTop: '6px', fontSize: '0.72rem', color: 'hsl(var(--text-muted))' }}>
+                          <span>⏱ {crop.growthPeriod} days</span>
+                          <span>📦 {crop.yield}</span>
+                        </div>
+                      </div>
+                    </summary>
 
-              {/* Detailed Growth Match Scorecard */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginTop: '8px' }}>
-                <h4 style={{ fontSize: '0.95rem', color: '#fff', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <Sprout size={16} style={{ color: '#52b788' }} />
-                  Crop Suitability Rankings & Targets
-                </h4>
-
-                {(() => {
-                  const inputs = {
-                    ph: parseFloat(formData.ph) || 6.5,
-                    temperature: parseFloat(formData.temperature) || 24,
-                    rainfall: parseFloat(formData.rainfall) || 120
-                  };
-                  
-                  // Calculate and sort top matching crops
-                  const rankedCrops = Object.keys(CROP_DATABASE).map(key => {
-                    const suit = calculateSuitability(key, inputs);
-                    return { key, ...CROP_DATABASE[key], suitability: suit };
-                  }).sort((a, b) => b.suitability - a.suitability);
-
-                  return (
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                      {rankedCrops.slice(0, 3).map((crop, index) => {
-                        const isFirst = index === 0;
-                        return (
-                          <div 
-                            key={crop.key} 
-                            style={{ 
-                              padding: '12px 14px', 
-                              borderRadius: '12px',
-                              border: isFirst ? '1.5px solid rgba(82, 183, 136, 0.25)' : '1px solid rgba(255,255,255,0.05)',
-                              background: isFirst ? 'rgba(82, 183, 136, 0.05)' : 'rgba(255,255,255,0.01)',
-                              display: 'flex',
-                              flexDirection: 'column',
-                              gap: '8px'
-                            }}
-                          >
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                              <strong style={{ fontSize: '0.85rem', color: '#fff' }}>
-                                #{index + 1} {crop.name}
-                              </strong>
-                              <span 
-                                style={{ 
-                                  fontSize: '0.72rem', 
-                                  fontWeight: 700, 
-                                  color: crop.suitability >= 80 ? '#52b788' : crop.suitability >= 60 ? '#ffa726' : '#e63946',
-                                }}
-                              >
-                                {crop.suitability}% Match
-                              </span>
+                    {/* Cultivation Steps */}
+                    <div style={{ padding: '0 16px 16px', borderTop: '1px solid rgba(255,255,255,0.05)', marginTop: '4px' }}>
+                      <p style={{ fontSize: '0.8rem', color: '#52b788', fontWeight: 700, margin: '12px 0 10px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>📋 How to Grow — Step by Step</p>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                        {crop.steps.map((step, i) => (
+                          <div key={i} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start', background: 'rgba(255,255,255,0.03)', borderRadius: '10px', padding: '10px 12px' }}>
+                            <div style={{ minWidth: '24px', height: '24px', borderRadius: '50%', background: 'rgba(82,183,136,0.2)', border: '1px solid rgba(82,183,136,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.7rem', fontWeight: 700, color: '#52b788', flexShrink: 0 }}>
+                              {i + 1}
                             </div>
-
-                            {/* Progress bar */}
-                            <div style={{ width: '100%', height: '5px', backgroundColor: 'rgba(255,255,255,0.05)', borderRadius: '10px', overflow: 'hidden' }}>
-                              <div 
-                                style={{ 
-                                  width: `${crop.suitability}%`, 
-                                  height: '100%', 
-                                  backgroundColor: crop.suitability >= 80 ? '#52b788' : crop.suitability >= 60 ? '#ffa726' : '#e63946',
-                                  borderRadius: '10px'
-                                }} 
-                              />
-                            </div>
-
-                            {/* Info checklist */}
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', fontSize: '0.72rem', color: 'hsl(var(--text-secondary))', borderTop: '1px solid rgba(255,255,255,0.03)', paddingTop: '6px', marginTop: '2px' }}>
-                              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <span>Yield Potential:</span>
-                                <span style={{ color: '#fff', fontWeight: 600 }}>{crop.yield}</span>
-                              </div>
-                              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <span>Cycle Duration:</span>
-                                <span style={{ color: '#fff', fontWeight: 600 }}>{crop.growthPeriod} Days</span>
-                              </div>
-                              <div style={{ color: 'hsl(var(--text-muted))', fontSize: '0.68rem', marginTop: '4px' }}>
-                                Target vs Your Soil Metrics:
-                              </div>
-                              <ul style={{ margin: 0, paddingLeft: '14px', listStyleType: 'disc', color: 'hsl(var(--text-secondary))' }}>
-                                <li>pH Scale: {crop.ph.min}-{crop.ph.max} (Actual: {inputs.ph})</li>
-                                <li>Temperature: {crop.temperature.min}-{crop.temperature.max}°C (Actual: {inputs.temperature}°C)</li>
-                                <li>Seasonal Rain: {crop.rainfall.min}-{crop.rainfall.max}mm (Actual: {inputs.rainfall}mm)</li>
-                              </ul>
-                            </div>
+                            <p style={{ margin: 0, fontSize: '0.8rem', color: 'hsl(var(--text-secondary))', lineHeight: 1.55 }}>{step}</p>
                           </div>
-                        );
-                      })}
+                        ))}
+                      </div>
                     </div>
-                  );
-                })()}
-              </div>
-
-            </div>
+                  </details>
+                );
+              });
+            })()}
 
             <button 
               onClick={handleReset}
               className="btn-secondary"
-              style={{ width: '100%', padding: '12px', borderRadius: '10px', marginTop: '20px', fontWeight: 600 }}
+              style={{ width: '100%', padding: '12px', borderRadius: '10px', fontWeight: 600 }}
             >
-              Analyze New Soil Sample
+              🔄 Try Different Soil Values
             </button>
           </div>
         ) : (
@@ -926,13 +904,13 @@ export default function CropPredictor({ user, token, backendUrl }) {
             <div style={{ width: '64px', height: '64px', borderRadius: '50%', backgroundColor: 'rgba(82, 183, 136, 0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px', border: '1.5px solid rgba(82, 183, 136, 0.15)' }}>
               <Sprout size={32} style={{ color: '#52b788' }} />
             </div>
-            <h3 style={{ fontSize: '1.3rem', color: '#fff', fontWeight: 700, marginBottom: '8px' }}>AI Decision Engine Awaiting Input</h3>
-            <p style={{ fontSize: '0.85rem', color: 'hsl(var(--text-secondary))', maxWidth: '360px', lineHeight: 1.5, marginBottom: '24px' }}>
-              Select a Farmer Smart Card ID, upload a photo of your local soil test report, or manually input parameters to start the recommendation analysis.
+            <h3 style={{ fontSize: '1.3rem', color: '#fff', fontWeight: 700, marginBottom: '8px' }}>Fill Your Soil Details</h3>
+            <p style={{ fontSize: '0.85rem', color: 'hsl(var(--text-secondary))', maxWidth: '320px', lineHeight: 1.6, marginBottom: '24px' }}>
+              Enter your soil values on the left and tap <strong style={{color:'#52b788'}}>"Find Best Crops"</strong> — we'll show you exactly what to grow and how!
             </p>
             <div style={{ display: 'flex', gap: '8px', background: 'rgba(255,255,255,0.02)', padding: '10px 14px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.04)', fontSize: '0.72rem', color: 'hsl(var(--text-muted))', alignItems: 'center' }}>
               <Sparkles size={12} style={{ color: '#ffa726' }} />
-              <span>Recommendations leverage dynamic weather forecasts & live mandi pricing APIs.</span>
+              <span>Don't have soil data? Use the Quick Presets above to get started instantly.</span>
             </div>
           </div>
         )}
