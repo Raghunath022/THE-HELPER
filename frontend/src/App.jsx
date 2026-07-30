@@ -15,15 +15,7 @@ import AuthModal from './components/AuthModal';
 import AIChatAssistant from './components/AIChatAssistant';
 import ToastProvider from './components/ToastProvider';
 import SatelliteView from './components/SatelliteView';
-import ApiKeySetup from './components/ApiKeySetup';
-import FarmPlanner from './components/FarmPlanner';
-import GuidedFarmProfiler from './components/GuidedFarmProfiler';
-import WeeklyOperationsPlanner from './components/WeeklyOperationsPlanner';
-import TodayFarmStatus from './components/TodayFarmStatus';
 import PrecisionCostEstimator from './components/PrecisionCostEstimator';
-import HistoricalTelemetryAudit from './components/HistoricalTelemetryAudit';
-import CropAllocationProjections from './components/CropAllocationProjections';
-import DecisionTransparency from './components/DecisionTransparency';
 
 const BACKEND_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
   ? `${window.location.protocol}//${window.location.hostname}:10000`
@@ -32,21 +24,7 @@ const BACKEND_URL = window.location.hostname === 'localhost' || window.location.
 export default function App() {
   const { t, i18n } = useTranslation();
 
-  // First-launch API key setup — show if no key found and user hasn't dismissed
-  const [showKeySetup, setShowKeySetup] = useState(() => {
-    const hasKey = !!localStorage.getItem('gemini_api_key');
-    const dismissed = !!localStorage.getItem('gemini_key_dismissed');
-    return !hasKey && !dismissed;
-  });
 
-  const handleKeySaved = (key) => {
-    setShowKeySetup(false);
-  };
-
-  const handleKeySkip = () => {
-    localStorage.setItem('gemini_key_dismissed', '1');
-    setShowKeySetup(false);
-  };
   // Navigation & UI state
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -128,10 +106,7 @@ export default function App() {
 
   return (
     <ToastProvider>
-    {/* First-launch API Key Setup Wizard */}
-    {showKeySetup && (
-      <ApiKeySetup onSave={handleKeySaved} onSkip={handleKeySkip} />
-    )}
+
     <div className="app-layout relative overflow-hidden">
       <div className="orb orb-1"></div>
       <div className="orb orb-2"></div>
@@ -356,15 +331,6 @@ export default function App() {
               ]
             },
             {
-              title: "Interactive Farm Planner",
-              items: [
-                { id: 'profiler',       icon: <Leaf size={18} />,         label: "Guided Farm Profiler" },
-                { id: 'weekly-planner', icon: <Calendar size={18} />,     label: "Weekly Operations Planner" },
-                { id: 'today-status',   icon: <Zap size={18} />,           label: "Today's Farm Status" },
-                { id: 'planner',        icon: <Mic size={18} />,          label: "Farmer Voice Assistant" },
-              ]
-            },
-            {
               title: "Decision & Economics",
               items: [
                 { id: 'predictor', icon: <Sprout size={18} />,       label: t('cropRecommend') },
@@ -381,14 +347,6 @@ export default function App() {
                 { id: 'weather',   icon: <Sun size={18} />,           label: t('weather') },
                 { id: 'iot',       icon: <Cpu size={18} />,            label: t('iotTelemetry') },
                 { id: 'satellite', icon: <Satellite size={18} />,      label: t('satelliteView') },
-              ]
-            },
-            {
-              title: "Platform Audits",
-              items: [
-                { id: 'telemetry-audit', icon: <History size={18} />,      label: "Historical Telemetry Audit" },
-                { id: 'crop-projections',icon: <BarChart3 size={18} />,    label: "Crop Allocation & Yield Projections" },
-                { id: 'transparency',    icon: <BookOpen size={18} />,     label: "Decision Calculation Transparency" },
               ]
             }
           ].map(group => (
@@ -465,10 +423,6 @@ export default function App() {
           <CropPredictor user={user} token={token} backendUrl={BACKEND_URL} />
         )}
 
-        {activeTab === 'planner' && (
-          <FarmPlanner user={user} />
-        )}
-
         {activeTab === 'fertilizer' && (
           <FertilizerAdvisor />
         )}
@@ -501,32 +455,8 @@ export default function App() {
           <SatelliteView />
         )}
 
-        {activeTab === 'profiler' && (
-          <GuidedFarmProfiler farmProfile={farmProfile} setFarmProfile={setFarmProfile} />
-        )}
-
-        {activeTab === 'weekly-planner' && (
-          <WeeklyOperationsPlanner farmProfile={farmProfile} />
-        )}
-
-        {activeTab === 'today-status' && (
-          <TodayFarmStatus farmProfile={farmProfile} />
-        )}
-
         {activeTab === 'cost-estimator' && (
           <PrecisionCostEstimator />
-        )}
-
-        {activeTab === 'telemetry-audit' && (
-          <HistoricalTelemetryAudit />
-        )}
-
-        {activeTab === 'crop-projections' && (
-          <CropAllocationProjections />
-        )}
-
-        {activeTab === 'transparency' && (
-          <DecisionTransparency />
         )}
       </main>
 
