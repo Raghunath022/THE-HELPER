@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SK. RAGHUNATH | Mechanical Engineering Portfolio</title>
-  <meta name="description" content="Engineering portfolio of SK. RAGHUNATH - Mechanical Engineering Student (2023-2027) at Amrita Vishwa Vidyapeetham. Specializing in ANSYS FEA/CFD Simulations, SAE Bicycle Design, Lathe Machining, and IoT Systems." />
+  <meta name="description" content="Official engineering portfolio of SK. RAGHUNATH - Mechanical Engineering Student (2023-2027) at Amrita Vishwa Vidyapeetham. Specializing in ANSYS FEA/CFD, SAE Chassis Design, Lathe Machining, and IoT Systems." />
   
   <!-- Google Fonts: Inter & Outfit -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
   
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
@@ -19,30 +19,27 @@
 </head>
 <body>
 
-  <!-- Header Navigation -->
+  <!-- Sticky Navbar -->
   <header class="navbar" id="navbar">
-    <div class="container nav-container">
+    <div class="container nav-wrapper">
       <a href="#hero" class="nav-brand">
-        <div class="brand-badge">SK</div>
-        <div class="brand-text">
-          <span class="brand-name">SK. RAGHUNATH</span>
-          <span class="brand-sub">Mechanical Engineer (2023–2027)</span>
-        </div>
+        <span class="brand-logo">SK</span>
+        <span class="brand-name">SK. RAGHUNATH</span>
       </a>
 
-      <nav class="nav-menu" id="navMenu">
-        <a href="#about" class="nav-link">About</a>
-        <a href="#projects" class="nav-link">Projects</a>
-        <a href="#skills" class="nav-link">Skills</a>
-        <a href="#education" class="nav-link">Education</a>
-        <a href="#contact" class="nav-link">Contact</a>
+      <nav class="nav-links" id="navLinks">
+        <a href="#about">Overview</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#education">Education</a>
+        <a href="#contact">Contact</a>
       </nav>
 
-      <div class="nav-actions">
+      <div class="nav-cta">
         <a href="mailto:skraghunath2005@gmail.com" class="btn btn-sm btn-primary">
-          <i class="fa-solid fa-envelope"></i> Contact Me
+          <i class="fa-solid fa-envelope"></i> Contact Candidate
         </a>
-        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu">
+        <button class="menu-btn" id="menuBtn" aria-label="Toggle Menu">
           <i class="fa-solid fa-bars"></i>
         </button>
       </div>
@@ -52,119 +49,115 @@
   <main>
     <!-- HERO SECTION -->
     <section class="hero" id="hero">
-      <div class="container hero-grid">
-        <div class="hero-content">
-          <div class="status-badge">
-            <i class="fa-solid fa-graduation-cap"></i> B.Tech Mechanical Engineering (2023–2027) @ Amrita Vishwa Vidyapeetham
+      <div class="container hero-container">
+        
+        <!-- Left Hero Content -->
+        <div class="hero-left">
+          <div class="academic-badge">
+            <i class="fa-solid fa-graduation-cap"></i> B.Tech Mechanical Engineering (2023–2027)
           </div>
 
-          <h1 class="hero-title">
-            SK. RAGHUNATH
-          </h1>
-          <h2 class="hero-subtitle">
-            Mechanical Engineering | FEA & CFD Simulation | Core Fabrication
-          </h2>
+          <h1 class="hero-name">SK. RAGHUNATH</h1>
+          <h2 class="hero-role">Mechanical Engineering | FEA & CFD Simulation Analyst</h2>
 
-          <p class="hero-desc">
-            Undergraduate mechanical engineer with hands-on experience in ANSYS Student Edition (FEA & CFD), SAE India vehicle frame design, lathe machining, and IoT sensor-fusion diagnostic systems.
+          <p class="hero-bio">
+            Undergraduate mechanical engineer specializing in finite element analysis (ANSYS Student Edition), computational fluid dynamics, SAE India vehicle chassis fabrication, and IoT sensor-fusion diagnostic systems.
           </p>
 
-          <div class="hero-buttons">
+          <div class="hero-actions">
             <a href="#projects" class="btn btn-primary">
-              <i class="fa-solid fa-briefcase"></i> View Resume Projects
+              <i class="fa-solid fa-folder-open"></i> Explore Projects
             </a>
             <a href="mailto:skraghunath2005@gmail.com" class="btn btn-outline">
-              <i class="fa-solid fa-envelope"></i> Email: skraghunath2005@gmail.com
+              <i class="fa-solid fa-envelope"></i> skraghunath2005@gmail.com
             </a>
           </div>
+        </div>
 
-          <!-- Resume Key Stats -->
-          <div class="quick-stats">
-            <div class="stat-box">
-              <span class="stat-num">2023–2027</span>
-              <span class="stat-lbl">Academic Batch</span>
+        <!-- Right Hero Summary Card (Pristine Alignment) -->
+        <div class="hero-right">
+          <div class="candidate-card">
+            <div class="card-header">
+              <i class="fa-solid fa-user-check"></i> Candidate Profile Overview
             </div>
-            <div class="stat-box">
-              <span class="stat-num">196.9 MPa</span>
-              <span class="stat-lbl">Peak FEA Stress</span>
-            </div>
-            <div class="stat-box">
-              <span class="stat-num">RailHack</span>
-              <span class="stat-lbl">National Finalist</span>
-            </div>
-            <div class="stat-box">
-              <span class="stat-num">SAE Lead</span>
-              <span class="stat-lbl">Bicycle Chassis Design</span>
+            <div class="card-content">
+              <div class="profile-item">
+                <span class="p-label">Candidate Name</span>
+                <span class="p-val">SK. RAGHUNATH</span>
+              </div>
+              <div class="profile-item">
+                <span class="p-label">Academic Program</span>
+                <span class="p-val">B.Tech Mechanical Engineering</span>
+              </div>
+              <div class="profile-item">
+                <span class="p-label">Academic Batch</span>
+                <span class="p-val">2023–2027</span>
+              </div>
+              <div class="profile-item">
+                <span class="p-label">Institution</span>
+                <span class="p-val">Amrita Vishwa Vidyapeetham</span>
+              </div>
+              <div class="profile-item">
+                <span class="p-label">Official Contact Email</span>
+                <span class="p-val highlight-email">skraghunath2005@gmail.com</span>
+              </div>
+              <div class="profile-item">
+                <span class="p-label">Core Specializations</span>
+                <span class="p-val">ANSYS FEA & CFD, Lathe Machining, SAE Chassis</span>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- Verified Resume Candidate Summary Box -->
-        <div class="hero-card-container">
-          <div class="resume-card">
-            <div class="card-top">
-              <i class="fa-solid fa-id-card"></i> Candidate Resume Details
-            </div>
-            <div class="card-body">
-              <div class="info-row">
-                <span class="info-label">Full Name</span>
-                <span class="info-val">SK. RAGHUNATH</span>
-              </div>
-              <div class="info-row">
-                <span class="info-label">Education</span>
-                <span class="info-val">B.Tech Mechanical Engineering (2023–2027)</span>
-              </div>
-              <div class="info-row">
-                <span class="info-label">Institution</span>
-                <span class="info-val">Amrita Vishwa Vidyapeetham – Chennai</span>
-              </div>
-              <div class="info-row">
-                <span class="info-label">Primary Contact Email</span>
-                <span class="info-val" style="color: var(--accent-blue-light); font-weight: 600;">skraghunath2005@gmail.com</span>
-              </div>
-              <div class="info-row">
-                <span class="info-label">Core Technical Focus</span>
-                <span class="info-val">ANSYS FEA & CFD, Lathe Machining, SAE Chassis</span>
-              </div>
+      </div>
 
-              <div class="card-actions">
-                <a href="mailto:skraghunath2005@gmail.com" class="card-btn">
-                  <i class="fa-solid fa-envelope"></i> Email Me
-                </a>
-                <a href="https://github.com/raghunath022" target="_blank" class="card-btn">
-                  <i class="fa-brands fa-github"></i> GitHub
-                </a>
-              </div>
-            </div>
+      <!-- Hero Stat Highlights Grid -->
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-num">2023–2027</div>
+            <div class="stat-desc">Academic Batch</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">196.9 MPa</div>
+            <div class="stat-desc">Peak FEA Stress Analyzed</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">RailHack</div>
+            <div class="stat-desc">National Finalist Honors</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">SAE Lead</div>
+            <div class="stat-desc">Bicycle Chassis Design</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ABOUT SECTION -->
-    <section class="about section-padding" id="about">
+    <!-- OVERVIEW SECTION -->
+    <section class="overview section-space" id="about">
       <div class="container">
-        <div class="section-head">
-          <h2>Engineering Core Competencies</h2>
-          <p>Strictly aligned with candidate academic coursework and technical project experience.</p>
+        <div class="section-title-box">
+          <h2>Core Engineering Areas</h2>
+          <p>Technical domains demonstrated across academic coursework and engineering projects.</p>
         </div>
 
-        <div class="about-cards">
-          <div class="area-card">
-            <div class="area-icon"><i class="fa-solid fa-chart-area"></i></div>
+        <div class="overview-grid">
+          <div class="overview-card">
+            <div class="card-icon"><i class="fa-solid fa-chart-area"></i></div>
             <h3>Simulation Projects (ANSYS)</h3>
-            <p>Nonlinear structural thermal-stress analysis (25–800°C ramps), biomimetic laminar CFD cooling channels, and SMA bearing impact damping.</p>
+            <p>Nonlinear structural thermal-stress analysis (25–800°C ramps), biomimetic laminar CFD heat transfer, and SMA bearing shock damping.</p>
           </div>
 
-          <div class="area-card">
-            <div class="area-icon"><i class="fa-solid fa-wrench"></i></div>
-            <h3>Core Mechanical & Manufacturing</h3>
-            <p>SAE India mountain bike chromium alloy frame fabrication, gas-spring piston suspension, lathe taper live center turning, and precision welding.</p>
+          <div class="overview-card">
+            <div class="card-icon"><i class="fa-solid fa-gears"></i></div>
+            <h3>Core Mechanical & Fabrication</h3>
+            <p>SAE India mountain bike chromium alloy frame fabrication, gas-spring piston suspension design, and lathe taper center machining.</p>
           </div>
 
-          <div class="area-card">
-            <div class="area-icon"><i class="fa-solid fa-microchip"></i></div>
-            <h3>Independent & Competition Projects</h3>
+          <div class="overview-card">
+            <div class="card-icon"><i class="fa-solid fa-microchip"></i></div>
+            <h3>Independent & Competitions</h3>
             <p>EnergiScan portable non-invasive current diagnostic system, Smart Axle Bearing IoT sensor fusion (RailHack Finalist), AgriSmart AI, and Telemedicine.</p>
           </div>
         </div>
@@ -172,105 +165,105 @@
     </section>
 
     <!-- PROJECTS SECTION -->
-    <section class="projects section-padding" id="projects">
+    <section class="projects section-space" id="projects">
       <div class="container">
-        <div class="section-head text-center">
-          <h2>Projects & Technical Experience</h2>
-          <p>Project descriptions formatted to match resume entries exactly.</p>
+        <div class="section-title-box text-center">
+          <h2>Engineering Case Studies</h2>
+          <p>Project details formatted for direct resume reference and technical evaluation.</p>
         </div>
 
-        <!-- Filter Tabs -->
-        <div class="filter-tabs" id="projectFilters">
-          <button class="tab-btn active" data-filter="all">All Resume Projects</button>
-          <button class="tab-btn" data-filter="ansys">Simulation Projects (ANSYS)</button>
-          <button class="tab-btn" data-filter="manufacturing">Core Mechanical & SAE</button>
-          <button class="tab-btn" data-filter="independent">Independent & Competitions</button>
+        <!-- Filter Buttons -->
+        <div class="filter-bar" id="projectFilters">
+          <button class="filter-btn active" data-filter="all">All Projects (9)</button>
+          <button class="filter-btn" data-filter="ansys">Simulation Projects (ANSYS)</button>
+          <button class="filter-btn" data-filter="manufacturing">Core Mechanical & SAE</button>
+          <button class="filter-btn" data-filter="independent">Independent & Competitions</button>
         </div>
 
         <!-- Projects Grid -->
-        <div class="projects-list" id="projectsGrid">
-          <!-- Rendered by JS -->
+        <div class="projects-grid" id="projectsGrid">
+          <!-- Rendered by app.js -->
         </div>
       </div>
     </section>
 
     <!-- SKILLS SECTION -->
-    <section class="skills section-padding" id="skills">
+    <section class="skills section-space" id="skills">
       <div class="container">
-        <div class="section-head">
-          <h2>Technical Tools & Methods</h2>
-          <p>Verified software tools and manufacturing processes.</p>
+        <div class="section-title-box">
+          <h2>Technical Arsenal & Competencies</h2>
+          <p>Software tools, manufacturing processes, and engineering methods.</p>
         </div>
 
         <div class="skills-grid">
-          <div class="skill-box">
-            <h3><i class="fa-solid fa-desktop"></i> CAE & Simulation</h3>
-            <ul>
+          <div class="skills-card">
+            <h3><i class="fa-solid fa-laptop-code"></i> CAE & Simulation</h3>
+            <ul class="skills-list">
               <li>ANSYS Student Edition (Mechanical & Fluent)</li>
-              <li>Nonlinear Thermal-Structural Simulation</li>
+              <li>Nonlinear Thermal-Structural Analysis</li>
               <li>Laminar Flow CFD Heat Transfer</li>
               <li>Shape Memory Alloy (SMA) Dynamic Damping</li>
               <li>3D CAD Modeling & Geometry Cleanup</li>
             </ul>
           </div>
 
-          <div class="skill-box">
-            <h3><i class="fa-solid fa-gears"></i> Core Manufacturing & Mechanical</h3>
-            <ul>
-              <li>Conventional Lathe Machining & Taper Turning</li>
+          <div class="skills-card">
+            <h3><i class="fa-solid fa-wrench"></i> Core Mechanical & Fabrication</h3>
+            <ul class="skills-list">
+              <li>Conventional Lathe Operations & Taper Turning</li>
               <li>Precision Tube Cutting, MIG/TIG Welding</li>
-              <li>Chromium Alloy Steel Frame Fabrication</li>
+              <li>Chromium Alloy Steel Frame Assembly</li>
               <li>Gas-Spring Piston Suspension Design</li>
               <li>Hydraulic Disc Braking Systems</li>
-              <li>SAE India Specifications & Team Leadership</li>
+              <li>SAE India Team Leadership & Standards</li>
             </ul>
           </div>
 
-          <div class="skill-box">
+          <div class="skills-card">
             <h3><i class="fa-solid fa-code"></i> Electronics, IoT & Software</h3>
-            <ul>
-              <li>Non-Invasive CT Current Sensors</li>
+            <ul class="skills-list">
+              <li>Non-Invasive CT Current Sensor Diagnostics</li>
               <li>IoT Sensor Fusion for Railway Axle Bearings</li>
               <li>Automated ROI Report Generation Workflow</li>
               <li>Python Data Processing & Analysis</li>
-              <li>HTML5 / CSS3 / JavaScript Web Interfaces</li>
+              <li>HTML5 / CSS3 / JavaScript Web Systems</li>
             </ul>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- EDUCATION & ACHIEVEMENTS SECTION -->
-    <section class="education section-padding" id="education">
+    <!-- EDUCATION & ACHIEVEMENTS -->
+    <section class="education section-space" id="education">
       <div class="container">
-        <div class="section-head">
-          <h2>Education & Recognized Achievements</h2>
+        <div class="section-title-box">
+          <h2>Education & Academic Credentials</h2>
         </div>
 
-        <div class="achievement-list">
-          <div class="achieve-item">
-            <div class="achieve-year">2023 – 2027</div>
-            <div class="achieve-content">
+        <div class="timeline-wrapper">
+          <div class="timeline-card">
+            <div class="timeline-badge">2023 – 2027</div>
+            <div class="timeline-body">
               <h3>B.Tech in Mechanical Engineering</h3>
-              <h4>Amrita Vishwa Vidyapeetham – Chennai Campus</h4>
-              <p>Specializing in computational mechanics, CFD thermal fluid dynamics, manufacturing processes, and mechanical machine design.</p>
+              <div class="timeline-org">Amrita Vishwa Vidyapeetham – Chennai Campus</div>
+              <p>Specializing in computational solid mechanics, CFD thermal fluid dynamics, manufacturing processes, and mechanical machine design.</p>
             </div>
           </div>
 
-          <div class="achieve-item">
-            <div class="achieve-year">RailHack Finalist</div>
-            <div class="achieve-content">
+          <div class="timeline-card">
+            <div class="timeline-badge">RailHack Finalist</div>
+            <div class="timeline-body">
               <h3>Smart Axle Bearing Monitoring System</h3>
-              <h4>National Railway Innovation Hackathon</h4>
-              <p>Shortlisted as a finalist for proposing an IoT sensor-fusion concept for real-time predictive failure monitoring in railway axle bearings.</p>
+              <div class="timeline-org">National Railway Innovation Hackathon</div>
+              <p>Shortlisted as a national finalist for proposing an IoT sensor-fusion concept for real-time predictive failure monitoring in railway axle bearings.</p>
             </div>
           </div>
 
-          <div class="achieve-item">
-            <div class="achieve-year">2025</div>
-            <div class="achieve-content">
+          <div class="timeline-card">
+            <div class="timeline-badge">2025</div>
+            <div class="timeline-body">
               <h3>Team Lead – SAE Bicycle Design</h3>
-              <h4>SAE India Challenge</h4>
+              <div class="timeline-org">SAE India Challenge</div>
               <p>Led frame design, fabrication, and suspension engineering for a chromium alloy human-powered vehicle built to SAE specifications.</p>
             </div>
           </div>
@@ -279,42 +272,65 @@
     </section>
 
     <!-- CONTACT SECTION -->
-    <section class="contact section-padding" id="contact">
+    <section class="contact section-space" id="contact">
       <div class="container">
-        <div class="contact-card">
+        <div class="contact-box">
           <div class="contact-left">
-            <h2>Contact Information</h2>
-            <p>SK. RAGHUNATH — Mechanical Engineering Student (2023–2027)</p>
-            
-            <div class="contact-links">
-              <a href="mailto:skraghunath2005@gmail.com" class="c-link">
-                <i class="fa-solid fa-envelope"></i> skraghunath2005@gmail.com
-              </a>
-              <a href="https://github.com/raghunath022" target="_blank" class="c-link">
-                <i class="fa-brands fa-github"></i> github.com/raghunath022
-              </a>
-              <span class="c-link">
-                <i class="fa-solid fa-location-dot"></i> Amrita Vishwa Vidyapeetham, Chennai Campus
-              </span>
+            <h2>Candidate Contact Details</h2>
+            <p>SK. RAGHUNATH — B.Tech Mechanical Engineering (2023–2027)</p>
+
+            <div class="contact-list">
+              <div class="contact-row">
+                <i class="fa-solid fa-envelope"></i>
+                <div>
+                  <div class="row-label">Primary Email</div>
+                  <a href="mailto:skraghunath2005@gmail.com" class="row-val">skraghunath2005@gmail.com</a>
+                </div>
+              </div>
+
+              <div class="contact-row">
+                <i class="fa-brands fa-github"></i>
+                <div>
+                  <div class="row-label">GitHub Repository</div>
+                  <a href="https://github.com/raghunath022" target="_blank" class="row-val">github.com/raghunath022</a>
+                </div>
+              </div>
+
+              <div class="contact-row">
+                <i class="fa-solid fa-location-dot"></i>
+                <div>
+                  <div class="row-label">Location</div>
+                  <span class="row-val">Amrita Vishwa Vidyapeetham, Chennai Campus</span>
+                </div>
+              </div>
             </div>
 
-            <div class="live-links-mini">
+            <div class="verified-links">
               <h4>Verified Project Links:</h4>
-              <div class="mini-buttons">
-                <a href="https://energis-scan.kavithaselvanthiran123.workers.dev/" target="_blank" class="mini-btn">EnergiScan App <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-                <a href="https://agri-smart-ai.web.app" target="_blank" class="mini-btn">AgriSmart AI <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-                <a href="https://raghunath022.github.io/Telemedicine/" target="_blank" class="mini-btn">Telemedicine <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+              <div class="mini-link-grid">
+                <a href="https://energis-scan.kavithaselvanthiran123.workers.dev/" target="_blank" class="m-link">EnergiScan App <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                <a href="https://agri-smart-ai.web.app" target="_blank" class="m-link">AgriSmart AI <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                <a href="https://raghunath022.github.io/Telemedicine/" target="_blank" class="m-link">Telemedicine <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
               </div>
             </div>
           </div>
 
           <div class="contact-right">
-            <h3>Direct Contact Form</h3>
-            <form onsubmit="event.preventDefault(); alert('Message submitted successfully!');">
-              <input type="text" placeholder="Your Name" required />
-              <input type="email" placeholder="Your Email (e.g. recruiter@company.com)" required />
-              <textarea rows="4" placeholder="Your Message" required></textarea>
-              <button type="submit" class="btn btn-primary btn-full">Send Message to SK. RAGHUNATH</button>
+            <h3>Send Message</h3>
+            <form onsubmit="event.preventDefault(); alert('Message sent!');">
+              <div class="form-field">
+                <label>Your Name</label>
+                <input type="text" placeholder="John Doe" required />
+              </div>
+              <div class="form-field">
+                <label>Your Email Address</label>
+                <input type="email" placeholder="john@example.com" required />
+              </div>
+              <div class="form-field">
+                <label>Message Content</label>
+                <textarea rows="4" placeholder="Type your message here..." required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block">Transmit Message</button>
             </form>
           </div>
         </div>
@@ -324,15 +340,15 @@
 
   <footer class="footer">
     <div class="container text-center">
-      <p>&copy; 2026 SK. RAGHUNATH | Contact: skraghunath2005@gmail.com | Batch 2023–2027</p>
+      <p>&copy; 2026 SK. RAGHUNATH | Contact Email: skraghunath2005@gmail.com | Academic Batch: 2023–2027</p>
     </div>
   </footer>
 
-  <!-- Modal Window for Project Details -->
-  <div class="modal-bg" id="projectModal">
-    <div class="modal-box">
-      <button class="modal-x" id="modalClose">&times;</button>
-      <div id="modalContent"></div>
+  <!-- Detail Modal Dialog -->
+  <div class="modal-backdrop" id="projectModal">
+    <div class="modal-content-box">
+      <button class="modal-close-btn" id="modalClose">&times;</button>
+      <div id="modalBody"></div>
     </div>
   </div>
 

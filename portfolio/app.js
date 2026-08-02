@@ -15,7 +15,7 @@ const projectsData = [
     bullets: [
       "Simulated an aluminium-coated SOFC interconnect under combined mechanical load and a 25–800°C thermal ramp in ANSYS Student Edition.",
       "Confirmed design limits held: Peak stress of 196.9 MPa relaxed to 80.3 MPa under sustained high temperature.",
-      "Recorded negligible physical deformation of 0.33 mm, demonstrating structural Adhesion & material limits held."
+      "Recorded negligible physical deformation of 0.33 mm, confirming structural & material safety limits held."
     ],
     tags: ["ANSYS Student Edition", "Nonlinear Structural", "Thermal Ramp (25-800°C)", "Peak Stress: 196.9 MPa"],
     link: null
@@ -203,7 +203,7 @@ function renderProjects(filter) {
 }
 
 function initFilterTabs() {
-  const btns = document.querySelectorAll(".tab-btn");
+  const btns = document.querySelectorAll(".filter-btn");
   btns.forEach(btn => {
     btn.addEventListener("click", () => {
       btns.forEach(b => b.classList.remove("active"));
@@ -217,10 +217,10 @@ function openModal(id) {
   const p = projectsData.find(item => item.id === id);
   if (!p) return;
 
-  const content = document.getElementById("modalContent");
+  const modalBody = document.getElementById("modalBody");
   const modal = document.getElementById("projectModal");
 
-  content.innerHTML = `
+  modalBody.innerHTML = `
     <div style="font-size: 0.78rem; font-family: var(--font-code); color: var(--accent-blue-light); margin-bottom: 0.25rem;">
       ${p.categoryLabel} • ${p.year}
     </div>
