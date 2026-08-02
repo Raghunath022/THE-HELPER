@@ -205,6 +205,8 @@ function renderProjects(filter) {
 
 function initFilterTabs() {
   const btns = document.querySelectorAll(".filter-btn");
+  if (!btns.length) return;
+
   btns.forEach(btn => {
     btn.addEventListener("click", () => {
       btns.forEach(b => b.classList.remove("active"));
