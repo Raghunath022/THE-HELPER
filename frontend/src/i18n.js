@@ -222,10 +222,23 @@ const resources = {
       bookingConfirmedTip: "Provider notified. Payment will be coordinated directly upon service delivery.",
       confirmBookingBtn: "Confirm Booking",
       cancelBtn: "Cancel",
-      languageLabel: "Language",
-      accountLabel: "Account",
       footerLabel: "© 2026 Agri AI SaaS Platform. All Rights Reserved. rural-ready installable PWA advisory system.",
       
+      // Nav & Features
+      navGroupMain: "Main Dashboard",
+      navGroupPlanner: "Interactive Farm Planner",
+      navGroupEconomics: "Decision & Economics",
+      navGroupMonitoring: "Monitoring & Logs",
+      navGroupAudits: "Platform Audits",
+      guidedFarmProfiler: "Guided Farm Profiler",
+      weeklyPlanner: "Weekly Operations Planner",
+      todayStatus: "Today's Farm Status",
+      farmerVoiceAssistant: "Farmer Voice Assistant",
+      precisionCostEstimator: "Precision Cost & Profit Estimator",
+      historicalTelemetryAudit: "Historical Telemetry Audit",
+      cropProjections: "Crop Allocation & Yield Projections",
+      decisionTransparency: "Decision Calculation Transparency",
+
       // Dashboard Keys
       refreshData: "Refresh Data",
       accountScope: "Account Role Scope",

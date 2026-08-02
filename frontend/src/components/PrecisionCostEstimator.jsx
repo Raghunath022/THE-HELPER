@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { DollarSign } from 'lucide-react';
+import { DollarSign, RotateCcw } from 'lucide-react';
 
 export default function PrecisionCostEstimator() {
   const { t } = useTranslation();
@@ -39,187 +39,158 @@ export default function PrecisionCostEstimator() {
     setFertilizerCost(3000);
   };
 
-  const translateCrop = (cropName) => {
-    const map = {
-      'Tomato': t('tomato', 'Tomato'),
-      'Potato': t('potato', 'Potato'),
-      'Paddy': t('paddy', t('rice', 'Paddy')),
-      'Wheat': t('wheat', 'Wheat'),
-      'Maize': t('maize', 'Maize')
-    };
-    return map[cropName] || cropName;
-  };
-
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
+    <div style={{ width: '100%', margin: '0 auto' }}>
       
-      {/* Title */}
-      <div className="card-glass" style={{ borderLeft: '4px solid #ffa726', padding: '16px 24px' }}>
-        <h2 className="text-gradient" style={{ fontSize: '1.5rem', fontWeight: 800, margin: 0 }}>
-          {t('pceTitle', 'Precision Cost & Profit Estimator')}
+      {/* ── Header ── */}
+      <div className="card-glass" style={{ marginBottom: '14px', padding: '12px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <h2 style={{ fontSize: '1.15rem', color: '#fff', fontWeight: 800, margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <DollarSign size={22} style={{ color: '#ffa726' }} />
+          Precision Cost & Profit Estimator
         </h2>
-        <p style={{ fontSize: '0.85rem', color: 'hsl(var(--text-secondary))', marginTop: '4px', margin: 0 }}>
-          {t('pceSubtitle', 'Calibrate seed, labor, irrigation, and pesticide budgets to project expected revenues and ROI.')}
-        </p>
+        <button 
+          onClick={handleReset}
+          style={{
+            padding: '5px 12px',
+            fontSize: '0.75rem',
+            fontWeight: 700,
+            color: '#ffa726',
+            background: 'rgba(255,167,38,0.12)',
+            border: '1px solid rgba(255,167,38,0.3)',
+            borderRadius: '8px',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '5px'
+          }}
+        >
+          <RotateCcw size={12} />
+          Reset Defaults
+        </button>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2" style={{ gap: '24px' }}>
+      {/* ── 2-Column Compact Layout ── */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '14px' }}>
         
-        {/* Left Column: Sliders Input */}
-        <div className="card-glass" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
-            <h3 style={{ fontSize: '1.15rem', color: '#fff', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <DollarSign size={20} style={{ color: '#ffa726' }} />
-              {t('pceHeader', 'Production Cost Parameters')}
-            </h3>
-            <button className="btn-secondary" style={{ padding: '4px 10px', fontSize: '0.7rem' }} onClick={handleReset}>
-              {t('pceReset', 'Reset Sliders')}
-            </button>
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            {/* Target Crop */}
+        {/* LEFT COLUMN: Direct Number Entry Parameters */}
+        <div className="card-glass" style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
             <div>
-              <label className="input-label">{t('pceSelectCrop', 'Select Crop')}</label>
+              <label style={{ fontSize: '0.72rem', color: 'hsl(var(--text-secondary))', display: 'block', marginBottom: '4px' }}>Select Crop</label>
               <select
                 value={crop}
                 onChange={(e) => setCrop(e.target.value)}
-                className="input-field"
+                style={{ width: '100%', padding: '7px 10px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(82,183,136,0.3)', color: '#fff', fontSize: '0.82rem', fontWeight: 700 }}
               >
-                <option value="Tomato">{translateCrop('Tomato')}</option>
-                <option value="Potato">{translateCrop('Potato')}</option>
-                <option value="Paddy">{translateCrop('Paddy')}</option>
-                <option value="Wheat">{translateCrop('Wheat')}</option>
-                <option value="Maize">{translateCrop('Maize')}</option>
+                <option value="Tomato" style={{ background: '#0a2419' }}>Tomato</option>
+                <option value="Potato" style={{ background: '#0a2419' }}>Potato</option>
+                <option value="Paddy" style={{ background: '#0a2419' }}>Paddy (Rice)</option>
+                <option value="Wheat" style={{ background: '#0a2419' }}>Wheat</option>
+                <option value="Maize" style={{ background: '#0a2419' }}>Maize</option>
               </select>
             </div>
 
-            {/* Acres */}
-            <div className="profit-slider-row" style={{ padding: '14px', borderRadius: '10px', background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.03)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '0.85rem' }}>
-                <span style={{ color: 'hsl(var(--text-secondary))' }}>{t('pceArea', 'Cultivated Area')}</span>
-                <strong style={{ color: '#52b788' }}>{acres} {t('acres', 'Acres')}</strong>
-              </div>
+            <div>
+              <label style={{ fontSize: '0.72rem', color: '#52b788', fontWeight: 700, display: 'block', marginBottom: '4px' }}>Cultivated Area (Acres)</label>
               <input 
-                type="range" min="1" max="50" step="1" 
-                value={acres} onChange={(e) => setAcres(Number(e.target.value))}
-                style={{ width: '100%', accentColor: '#52b788', cursor: 'ew-resize' }}
-              />
-            </div>
-
-            {/* Seed Cost */}
-            <div className="profit-slider-row" style={{ padding: '14px', borderRadius: '10px', background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.03)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '0.85rem' }}>
-                <span style={{ color: 'hsl(var(--text-secondary))' }}>{t('pceSeedCost', 'Seed Cost (per acre)')}</span>
-                <strong style={{ color: '#fff' }}>₹{seedCost.toLocaleString('en-IN')}</strong>
-              </div>
-              <input 
-                type="range" min="500" max="10000" step="100" 
-                value={seedCost} onChange={(e) => setSeedCost(Number(e.target.value))}
-                style={{ width: '100%', accentColor: '#ffa726', cursor: 'ew-resize' }}
-              />
-            </div>
-
-            {/* Labor Cost */}
-            <div className="profit-slider-row" style={{ padding: '14px', borderRadius: '10px', background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.03)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '0.85rem' }}>
-                <span style={{ color: 'hsl(var(--text-secondary))' }}>{t('pceLaborCost', 'Labor Cost (per acre)')}</span>
-                <strong style={{ color: '#fff' }}>₹{laborCost.toLocaleString('en-IN')}</strong>
-              </div>
-              <input 
-                type="range" min="1000" max="15000" step="250" 
-                value={laborCost} onChange={(e) => setLaborCost(Number(e.target.value))}
-                style={{ width: '100%', accentColor: '#ffa726', cursor: 'ew-resize' }}
-              />
-            </div>
-
-            {/* Irrigation Cost */}
-            <div className="profit-slider-row" style={{ padding: '14px', borderRadius: '10px', background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.03)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '0.85rem' }}>
-                <span style={{ color: 'hsl(var(--text-secondary))' }}>{t('pceIrrigationCost', 'Irrigation & Water (per acre)')}</span>
-                <strong style={{ color: '#fff' }}>₹{irrigationCost.toLocaleString('en-IN')}</strong>
-              </div>
-              <input 
-                type="range" min="200" max="8000" step="100" 
-                value={irrigationCost} onChange={(e) => setIrrigationCost(Number(e.target.value))}
-                style={{ width: '100%', accentColor: '#ffa726', cursor: 'ew-resize' }}
-              />
-            </div>
-
-            {/* Fertilizer Cost */}
-            <div className="profit-slider-row" style={{ padding: '14px', borderRadius: '10px', background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.03)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '0.85rem' }}>
-                <span style={{ color: 'hsl(var(--text-secondary))' }}>{t('pceFertilizerCost', 'Fertilizers & Pesticides (per acre)')}</span>
-                <strong style={{ color: '#fff' }}>₹{fertilizerCost.toLocaleString('en-IN')}</strong>
-              </div>
-              <input 
-                type="range" min="500" max="12000" step="100" 
-                value={fertilizerCost} onChange={(e) => setFertilizerCost(Number(e.target.value))}
-                style={{ width: '100%', accentColor: '#ffa726', cursor: 'ew-resize' }}
+                type="number" step="0.25" min="0.1" max="100"
+                value={acres}
+                onChange={(e) => setAcres(Math.max(0.1, parseFloat(e.target.value) || 0.1))}
+                style={{ width: '100%', padding: '7px 10px', borderRadius: '8px', background: 'rgba(82, 183, 136, 0.08)', border: '1.5px solid #52b788', color: '#fff', fontSize: '0.85rem', fontWeight: 800 }}
               />
             </div>
           </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+            <div>
+              <label style={{ fontSize: '0.72rem', color: 'hsl(var(--text-secondary))', display: 'block', marginBottom: '4px' }}>Seed Cost (₹/acre)</label>
+              <input 
+                type="number" step="100" min="0"
+                value={seedCost}
+                onChange={(e) => setSeedCost(Math.max(0, parseInt(e.target.value) || 0))}
+                placeholder="e.g. 2500"
+                style={{ width: '100%', padding: '7px 10px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', fontSize: '0.82rem', fontWeight: 700 }}
+              />
+            </div>
+
+            <div>
+              <label style={{ fontSize: '0.72rem', color: 'hsl(var(--text-secondary))', display: 'block', marginBottom: '4px' }}>Labor Cost (₹/acre)</label>
+              <input 
+                type="number" step="250" min="0"
+                value={laborCost}
+                onChange={(e) => setLaborCost(Math.max(0, parseInt(e.target.value) || 0))}
+                placeholder="e.g. 5000"
+                style={{ width: '100%', padding: '7px 10px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', fontSize: '0.82rem', fontWeight: 700 }}
+              />
+            </div>
+
+            <div>
+              <label style={{ fontSize: '0.72rem', color: 'hsl(var(--text-secondary))', display: 'block', marginBottom: '4px' }}>Irrigation Cost (₹/acre)</label>
+              <input 
+                type="number" step="100" min="0"
+                value={irrigationCost}
+                onChange={(e) => setIrrigationCost(Math.max(0, parseInt(e.target.value) || 0))}
+                placeholder="e.g. 1500"
+                style={{ width: '100%', padding: '7px 10px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', fontSize: '0.82rem', fontWeight: 700 }}
+              />
+            </div>
+
+            <div>
+              <label style={{ fontSize: '0.72rem', color: 'hsl(var(--text-secondary))', display: 'block', marginBottom: '4px' }}>Fertilizer & Pesticide (₹/acre)</label>
+              <input 
+                type="number" step="100" min="0"
+                value={fertilizerCost}
+                onChange={(e) => setFertilizerCost(Math.max(0, parseInt(e.target.value) || 0))}
+                placeholder="e.g. 3000"
+                style={{ width: '100%', padding: '7px 10px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', fontSize: '0.82rem', fontWeight: 700 }}
+              />
+            </div>
+          </div>
+
         </div>
 
-        {/* Right Column: Dynamic Statements Output */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+        {/* RIGHT COLUMN: Profit Statement & Financial Return */}
+        <div className="card-glass" style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
           
-          <div className="card-glass glow-border" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            <span className="badge badge-emerald" style={{ alignSelf: 'flex-start', padding: '4px 10px', fontSize: '0.75rem' }}>
-              {t('pceStatement', 'PROFIT STATEMENT')}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span style={{ fontSize: '0.78rem', fontWeight: 800, color: '#52b788', background: 'rgba(82,183,136,0.12)', padding: '3px 10px', borderRadius: '6px' }}>
+              PROFIT STATEMENT
             </span>
-            
-            <div style={{ borderBottom: '1px solid rgba(82, 183, 136, 0.12)', paddingBottom: '16px' }}>
-              <span style={{ fontSize: '0.8rem', color: 'hsl(var(--text-muted))', display: 'block', textTransform: 'uppercase', fontWeight: 600 }}>{t('pceNetProfit', 'Expected Net Profit')}</span>
-              <h1 style={{ fontSize: '2.5rem', color: expectedNetProfit > 0 ? '#52b788' : '#ff5252', marginTop: '6px', fontWeight: 900, margin: 0 }}>
-                {expectedNetProfit < 0 ? '-' : ''}₹{Math.abs(expectedNetProfit).toLocaleString('en-IN')}
-              </h1>
+            <span style={{ 
+              backgroundColor: expectedNetProfit > 0 ? 'rgba(82, 183, 136, 0.15)' : 'rgba(255, 82, 82, 0.15)',
+              color: expectedNetProfit > 0 ? '#52b788' : '#ff5252', 
+              fontWeight: 800,
+              padding: '3px 8px',
+              borderRadius: '6px',
+              fontSize: '0.75rem'
+            }}>
+              {expectedNetProfit > 0 ? '+' : ''}{roiPercent}% ROI
+            </span>
+          </div>
+
+          <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(82,183,136,0.15)', padding: '12px', borderRadius: '10px' }}>
+            <span style={{ fontSize: '0.72rem', color: 'hsl(var(--text-muted))', display: 'block', textTransform: 'uppercase', fontWeight: 700 }}>Expected Net Profit</span>
+            <h1 style={{ fontSize: '2.2rem', color: expectedNetProfit > 0 ? '#52b788' : '#ff5252', marginTop: '2px', fontWeight: 900, margin: 0 }}>
+              {expectedNetProfit < 0 ? '-' : ''}₹{Math.abs(expectedNetProfit).toLocaleString('en-IN')}
+            </h1>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', fontSize: '0.8rem' }}>
+            <div style={{ background: 'rgba(255,255,255,0.02)', padding: '8px 10px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
+              <span style={{ fontSize: '0.68rem', color: 'hsl(var(--text-secondary))', display: 'block' }}>Total Cultivation Cost</span>
+              <span style={{ color: '#ffa726', fontWeight: 800 }}>₹{totalCost.toLocaleString('en-IN')}</span>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem' }}>
-                <span style={{ color: 'hsl(var(--text-secondary))' }}>{t('pceTotalCost', 'Total Cultivation Cost')}</span>
-                <span style={{ color: '#ffa726', fontWeight: 700 }}>₹{totalCost.toLocaleString('en-IN')}</span>
-              </div>
-
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem' }}>
-                <span style={{ color: 'hsl(var(--text-secondary))' }}>{t('pceYield', 'Projected Yield')}</span>
-                <span style={{ color: '#fff', fontWeight: 700 }}>{expectedYieldTons} {t('unit_tons', 'Tons')}</span>
-              </div>
-
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem' }}>
-                <span style={{ color: 'hsl(var(--text-secondary))' }}>{t('pceRoi', 'ROI Rate')}</span>
-                <span style={{ 
-                  backgroundColor: expectedNetProfit > 0 ? 'rgba(82, 183, 136, 0.15)' : 'rgba(255, 82, 82, 0.15)',
-                  color: expectedNetProfit > 0 ? '#52b788' : '#ff5252', 
-                  fontWeight: 800,
-                  padding: '2px 8px',
-                  borderRadius: '6px',
-                  fontSize: '0.78rem'
-                }}>
-                  {expectedNetProfit > 0 ? '+' : ''}{roiPercent}% {t('pceRoiText', 'ROI')}
-                </span>
-              </div>
-            </div>
-
-            {/* Impact Display Grid */}
-            <div style={{ borderTop: '1px solid rgba(82, 183, 136, 0.15)', paddingTop: '16px', marginTop: '4px' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-                <div style={{ background: 'rgba(82, 183, 136, 0.05)', border: '1px solid rgba(82, 183, 136, 0.12)', borderRadius: '10px', padding: '12px', textAlign: 'center' }}>
-                  <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#52b788' }}>+28%</div>
-                  <div style={{ fontSize: '0.72rem', color: 'hsl(var(--text-secondary))', marginTop: '2px' }}>{t('pceYieldGain', 'Yield Gain')}</div>
-                </div>
-                <div style={{ background: 'rgba(82, 183, 136, 0.05)', border: '1px solid rgba(82, 183, 136, 0.12)', borderRadius: '10px', padding: '12px', textAlign: 'center' }}>
-                  <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#52b788' }}>-18%</div>
-                  <div style={{ fontSize: '0.72rem', color: 'hsl(var(--text-secondary))', marginTop: '2px' }}>{t('pceWaterSaved', 'Water Saved')}</div>
-                </div>
-              </div>
+            <div style={{ background: 'rgba(255,255,255,0.02)', padding: '8px 10px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
+              <span style={{ fontSize: '0.68rem', color: 'hsl(var(--text-secondary))', display: 'block' }}>Projected Yield</span>
+              <span style={{ color: '#fff', fontWeight: 800 }}>{expectedYieldTons} Tons</span>
             </div>
           </div>
 
-          <div className="card-glass" style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.8rem', lineHeight: 1.4, color: 'hsl(var(--text-secondary))' }}>
-            <span style={{ fontWeight: 700, color: '#fff' }}>💡 {t('pceTipTitle', 'Maximizing Return on Investment:')}</span>
-            <span>{t('pceTipDesc', 'Selecting precision sowing windows and matching organic manure doses reduces fertilizer expense by 12% while defending crops against high evaporation rates.')}</span>
+          <div style={{ background: 'rgba(82, 183, 136, 0.04)', border: '1px solid rgba(82, 183, 136, 0.12)', borderRadius: '8px', padding: '10px', fontSize: '0.75rem', lineHeight: 1.4, color: 'hsl(var(--text-secondary))' }}>
+            <strong style={{ color: '#fff' }}>💡 Maximizing Return on Investment:</strong>
+            <div>Precision seed spacing & targeted fertilizer dosing reduces input costs by ~12% while securing crop yield.</div>
           </div>
 
         </div>

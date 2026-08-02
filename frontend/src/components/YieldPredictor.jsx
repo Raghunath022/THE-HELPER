@@ -1,26 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Calculator, DollarSign, Sprout, TrendingUp, AlertCircle } from 'lucide-react';
+import { Calculator, Sprout, TrendingUp, DollarSign } from 'lucide-react';
 
 const CROP_BASE_YIELDS = {
-  rice: { base: 1.8, phOptimal: 6.5, price: 2450, unit: 'Quintal' },
-  maize: { base: 2.2, phOptimal: 6.2, price: 2050, unit: 'Quintal' },
-  chickpea: { base: 0.7, phOptimal: 7.0, price: 5200, unit: 'Quintal' },
-  cotton: { base: 1.0, phOptimal: 6.8, price: 7100, unit: 'Quintal' },
-  sugarcane: { base: 32.0, phOptimal: 6.8, price: 310, unit: 'Quintal' },
-  banana: { base: 16.0, phOptimal: 6.5, price: 2200, unit: 'Quintal' },
-  grapes: { base: 7.5, phOptimal: 6.5, price: 7000, unit: 'Quintal' },
-  coconut: { base: 4.0, phOptimal: 6.0, price: 3200, unit: 'Thousand Nuts' },
-  wheat: { base: 1.6, phOptimal: 6.8, price: 2275, unit: 'Quintal' }
+  rice: { name: 'Rice (Paddy)', base: 1.8, phOptimal: 6.5, pricePerTon: 24500 },
+  maize: { name: 'Maize (Corn)', base: 2.2, phOptimal: 6.2, pricePerTon: 20500 },
+  wheat: { name: 'Wheat', base: 1.6, phOptimal: 6.8, pricePerTon: 22750 },
+  cotton: { name: 'Cotton', base: 1.0, phOptimal: 6.8, pricePerTon: 71000 },
+  groundnut: { name: 'Groundnut', base: 1.2, phOptimal: 6.0, pricePerTon: 58000 },
+  sugarcane: { name: 'Sugarcane', base: 32.0, phOptimal: 6.8, pricePerTon: 3100 },
+  banana: { name: 'Banana', base: 16.0, phOptimal: 6.5, pricePerTon: 22000 },
+  pomegranate: { name: 'Pomegranate', base: 6.5, phOptimal: 6.8, pricePerTon: 65000 },
+  mango: { name: 'Mango', base: 5.0, phOptimal: 6.5, pricePerTon: 45000 }
 };
 
 const STATE_MULTIPLIERS = {
-  'Tamil Nadu': { rice: 1.15, coconut: 1.20, sugarcane: 1.10, default: 1.02 },
+  'Tamil Nadu': { rice: 1.15, sugarcane: 1.10, banana: 1.18, default: 1.02 },
   'Punjab': { wheat: 1.25, rice: 1.18, default: 1.05 },
   'Haryana': { wheat: 1.20, rice: 1.12, default: 1.03 },
   'Uttar Pradesh': { sugarcane: 1.22, wheat: 1.15, default: 1.00 },
-  'Maharashtra': { sugarcane: 1.18, grapes: 1.25, cotton: 1.10, default: 0.99 },
-  'Karnataka': { ragi: 1.15, coconut: 1.12, default: 1.01 },
+  'Maharashtra': { sugarcane: 1.18, cotton: 1.10, default: 0.99 },
+  'Karnataka': { banana: 1.15, sugarcane: 1.10, default: 1.01 },
   'Gujarat': { cotton: 1.20, default: 1.00 }
 };
 
@@ -28,26 +28,20 @@ export default function YieldPredictor() {
   const { t } = useTranslation();
 
   const [crop, setCrop] = useState('rice');
-  const [area, setArea] = useState(2);
+  const [area, setArea] = useState(2.0);
   const [ph, setPh] = useState(6.5);
   const [irrigation, setIrrigation] = useState('canal');
   const [state, setState] = useState('Tamil Nadu');
   const [fertilizerLevel, setFertilizerLevel] = useState(80);
 
-  // Precision Cost Estimator Slider States (Moved from Dashboard)
-  const [seedCost, setSeedCost] = useState(2500);
-  const [laborCost, setLaborCost] = useState(5000);
-  const [irrigationCost, setIrrigationCost] = useState(1500);
-  const [fertilizerCost, setFertilizerCost] = useState(3000);
-
   const [prediction, setPrediction] = useState(null);
 
   useEffect(() => {
     runInference();
-  }, [crop, area, ph, irrigation, state, fertilizerLevel, seedCost, laborCost, irrigationCost, fertilizerCost]);
+  }, [crop, area, ph, irrigation, state, fertilizerLevel]);
 
   const runInference = () => {
-    const cropData = CROP_BASE_YIELDS[crop] || { base: 1.5, phOptimal: 6.5, price: 2000, unit: 'Quintal' };
+    const cropData = CROP_BASE_YIELDS[crop] || { base: 1.5, phOptimal: 6.5, pricePerTon: 20000 };
     
     // Gaussian RBF pH suitability
     const phPenalty = Math.exp(-Math.pow(ph - cropData.phOptimal, 2) / 1.6);
@@ -66,194 +60,184 @@ export default function YieldPredictor() {
     const stateMult = stateData[crop] || stateData.default || 1.00;
 
     // Fertilizer modifier
-    const x = fertilizerLevel / 100;
+    const x = Math.min(150, Math.max(0, fertilizerLevel)) / 100;
     const fertFactor = 0.58 + 0.62 * x - 0.20 * Math.pow(x, 2);
 
     const yieldPerAcre = cropData.base * phPenalty * irrMult * stateMult * fertFactor;
     const totalYieldTons = yieldPerAcre * parseFloat(area || 0);
 
-    let totalYieldUnits = totalYieldTons * 10;
-    if (cropData.unit === 'Thousand Nuts') {
-      totalYieldUnits = totalYieldTons * 1.2;
-    }
-
-    const revenue = totalYieldUnits * cropData.price;
-
-    // Calibrate cost per acre from the precision slider states
-    const costPerAcre = seedCost + laborCost + irrigationCost + fertilizerCost;
-    const totalCost = costPerAcre * parseFloat(area || 0);
-    const profit = revenue - totalCost;
-    const profitMargin = revenue > 0 ? (profit / revenue) * 100 : 0;
-    const roiPercent = totalCost > 0 ? Math.round((profit / totalCost) * 100) : 0;
+    const grossRevenue = totalYieldTons * cropData.pricePerTon;
+    const estCostPerAcre = 12000;
+    const totalCost = estCostPerAcre * parseFloat(area || 0);
+    const netProfit = grossRevenue - totalCost;
 
     setPrediction({
       yieldPerAcre: yieldPerAcre.toFixed(2),
       totalYield: totalYieldTons.toFixed(2),
-      revenue: Math.round(revenue),
-      cost: Math.round(totalCost),
-      profit: Math.round(profit),
-      margin: profitMargin.toFixed(1),
-      roi: roiPercent,
-      unit: cropData.unit,
+      grossRevenue: Math.round(grossRevenue),
+      totalCost: Math.round(totalCost),
+      netProfit: Math.round(netProfit),
       phPenalty: Math.round(phPenalty * 100),
       fertFactor: Math.round(fertFactor * 100)
     });
   };
 
   return (
-    <div className="predictor-grid">
+    <div style={{ width: '100%', margin: '0 auto' }}>
       
-      {/* Inputs panel */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      {/* ── Header ── */}
+      <div className="card-glass" style={{ marginBottom: '14px', padding: '12px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <h2 style={{ fontSize: '1.15rem', color: '#fff', fontWeight: 800, margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <Calculator size={22} style={{ color: '#52b788' }} />
+          Yield & Financial Revenue Predictor
+        </h2>
+        <span style={{ fontSize: '0.75rem', color: '#52b788', fontWeight: 700, background: 'rgba(82,183,136,0.12)', padding: '4px 10px', borderRadius: '12px' }}>
+          ⚡ RBF Regression Simulation
+        </span>
+      </div>
+
+      {/* ── 2-Column Compact Layout ── */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '14px' }}>
         
-        {/* Core Yield Inputs Card */}
-        <div className="card-glass">
-          <h2 style={{ fontSize: '1.2rem', color: '#fff', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <Calculator style={{ color: '#52b788' }} />
-            {t('yieldPrediction')}
-          </h2>
-          <p style={{ fontSize: '0.8rem', color: 'hsl(var(--text-muted))', marginBottom: '20px' }}>
-            {t('yieldPredictionSub')}
-          </p>
-    
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            
-            {/* Crop Selector */}
+        {/* LEFT PANEL: Inputs Grid */}
+        <div className="card-glass" style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
             <div>
-              <label className="input-label">{t('selectCrop')}</label>
+              <label style={{ fontSize: '0.72rem', color: 'hsl(var(--text-secondary))', display: 'block', marginBottom: '4px' }}>Target Crop</label>
               <select
                 value={crop}
                 onChange={(e) => setCrop(e.target.value)}
-                className="input-field"
+                style={{ width: '100%', padding: '7px 10px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(82,183,136,0.3)', color: '#fff', fontSize: '0.82rem', fontWeight: 700 }}
               >
                 {Object.keys(CROP_BASE_YIELDS).map(c => (
                   <option key={c} value={c} style={{ background: '#0a2419' }}>
-                    {c.toUpperCase()}
+                    {CROP_BASE_YIELDS[c].name}
                   </option>
                 ))}
               </select>
             </div>
 
-            {/* Land Area */}
             <div>
-              <label className="input-label">{t('landArea')}</label>
+              <label style={{ fontSize: '0.72rem', color: '#52b788', fontWeight: 700, display: 'block', marginBottom: '4px' }}>Land Area (Acres)</label>
               <input 
-                type="number" 
-                min="0.5" 
-                max="200" 
-                step="0.5"
+                type="number" step="0.25" min="0.1" max="100"
                 value={area}
-                onChange={(e) => setArea(parseFloat(e.target.value) || '')}
-                className="input-field"
-                placeholder="e.g. 2 Acres"
+                onChange={(e) => setArea(Math.max(0.1, parseFloat(e.target.value) || 0.1))}
+                style={{ width: '100%', padding: '7px 10px', borderRadius: '8px', background: 'rgba(82, 183, 136, 0.08)', border: '1.5px solid #52b788', color: '#fff', fontSize: '0.85rem', fontWeight: 800 }}
               />
             </div>
+          </div>
 
-            {/* Irrigation system */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
             <div>
-              <label className="input-label">{t('irrigationType')}</label>
+              <label style={{ fontSize: '0.72rem', color: 'hsl(var(--text-secondary))', display: 'block', marginBottom: '4px' }}>Irrigation Type</label>
               <select
                 value={irrigation}
                 onChange={(e) => setIrrigation(e.target.value)}
-                className="input-field"
+                style={{ width: '100%', padding: '7px 10px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', fontSize: '0.82rem', fontWeight: 700 }}
               >
-                <option value="drip" style={{ background: '#0a2419' }}>{t('irrigationDrip')}</option>
-                <option value="sprinkler" style={{ background: '#0a2419' }}>{t('irrigationSprinkler')}</option>
-                <option value="canal" style={{ background: '#0a2419' }}>{t('irrigationCanal')}</option>
-                <option value="rainfed" style={{ background: '#0a2419' }}>{t('irrigationRainfed')}</option>
+                <option value="drip" style={{ background: '#0a2419' }}>💧 Drip Irrigation (+25%)</option>
+                <option value="sprinkler" style={{ background: '#0a2419' }}>🌧️ Sprinkler (+12%)</option>
+                <option value="canal" style={{ background: '#0a2419' }}>🌊 Canal / Borewell</option>
+                <option value="rainfed" style={{ background: '#0a2419' }}>🌦️ Rainfed (-35%)</option>
               </select>
             </div>
 
-            {/* State selector */}
             <div>
-              <label className="input-label">{t('state')}</label>
+              <label style={{ fontSize: '0.72rem', color: 'hsl(var(--text-secondary))', display: 'block', marginBottom: '4px' }}>State / Region</label>
               <select
                 value={state}
                 onChange={(e) => setState(e.target.value)}
-                className="input-field"
+                style={{ width: '100%', padding: '7px 10px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', fontSize: '0.82rem', fontWeight: 700 }}
               >
                 {Object.keys(STATE_MULTIPLIERS).map(s => (
                   <option key={s} value={s} style={{ background: '#0a2419' }}>{s}</option>
                 ))}
               </select>
             </div>
+          </div>
 
-            {/* pH level */}
+          {/* Number Entering Fields for pH & Fertilizer */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
             <div>
-              <div className="flex-between" style={{ marginBottom: '6px' }}>
-                <span className="input-label" style={{ margin: 0 }}>{t('phValue')}</span>
-                <span style={{ color: '#52b788', fontWeight: 700, fontFamily: 'monospace' }}>{ph}</span>
-              </div>
+              <label style={{ fontSize: '0.72rem', color: 'hsl(var(--text-secondary))', display: 'block', marginBottom: '4px' }}>Soil pH Level</label>
               <input 
-                type="range" 
-                min="4.5" max="8.5" step="0.1"
+                type="number" step="0.1" min="3.5" max="9.5"
                 value={ph}
-                onChange={(e) => setPh(parseFloat(e.target.value))}
-                style={{ width: '100%', accentColor: '#52b788', cursor: 'ew-resize' }}
+                onChange={(e) => setPh(parseFloat(e.target.value) || 6.5)}
+                placeholder="e.g. 6.5"
+                style={{ width: '100%', padding: '7px 10px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', fontSize: '0.85rem', fontWeight: 700 }}
               />
             </div>
-    
-            {/* Fertilizer level */}
+
             <div>
-              <div className="flex-between" style={{ marginBottom: '6px' }}>
-                <span className="input-label" style={{ margin: 0 }}>{t('fertilizerDosageIntensity')}</span>
-                <span style={{ color: fertilizerLevel > 110 ? '#ffa726' : '#52b788', fontWeight: 700, fontFamily: 'monospace' }}>
-                  {fertilizerLevel}%
-                </span>
-              </div>
+              <label style={{ fontSize: '0.72rem', color: 'hsl(var(--text-secondary))', display: 'block', marginBottom: '4px' }}>Fertilizer Dosage Intensity (%)</label>
               <input 
-                type="range" 
-                min="0" max="150" step="5"
+                type="number" min="10" max="150" step="5"
                 value={fertilizerLevel}
-                onChange={(e) => setFertilizerLevel(parseInt(e.target.value))}
-                style={{ width: '100%', accentColor: '#52b788', cursor: 'ew-resize' }}
+                onChange={(e) => setFertilizerLevel(parseInt(e.target.value) || 80)}
+                placeholder="e.g. 80"
+                style={{ width: '100%', padding: '7px 10px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', fontSize: '0.85rem', fontWeight: 700 }}
               />
-              <span style={{ fontSize: '9px', color: 'hsl(var(--text-muted))', display: 'block', marginTop: '4px' }}>
-                {t('fertilizerLevelMsg')}
-              </span>
             </div>
+          </div>
+
+          <div style={{ fontSize: '0.7rem', color: 'hsl(var(--text-muted))', marginTop: '2px' }}>
+            *100% matches optimal NPK target dosage. Higher intensity increases yield up to 120%.
           </div>
         </div>
 
-        {/* Sliders Card removed — moved to standalone view */}
-      </div>
-
-      {/* Output Panel */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-        
-        {/* Prediction HUD */}
+        {/* RIGHT PANEL: Projected Yield & Financial Return HUD */}
         {prediction && (
-          <div className="card-glass glow-border">
-            <span className="badge badge-emerald" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-              <Sprout size={12} /> {t('mlYieldModel')}
-            </span>
+          <div className="card-glass" style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
             
-            <div className="flex-row-resp" style={{ marginTop: '20px', borderBottom: '1px solid rgba(82, 183, 136, 0.12)', paddingBottom: '20px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#52b788', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <Sprout size={16} /> ML Projected Yield Output
+              </span>
+            </div>
+
+            {/* Total Yield & Per-Acre Yield Grid (Clean Typography) */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(82, 183, 136, 0.2)', padding: '12px 14px', borderRadius: '10px' }}>
               <div>
-                <span style={{ fontSize: '0.8rem', color: 'hsl(var(--text-muted))' }}>{t('predictedYieldHeader')}</span>
-                <h1 style={{ fontSize: '2.5rem', color: '#fff', marginTop: '4px' }}>
-                  {prediction.totalYield} <span style={{ fontSize: '1.2rem', color: 'hsl(var(--text-secondary))' }}>Tons</span>
-                </h1>
+                <span style={{ fontSize: '0.72rem', color: 'hsl(var(--text-secondary))', display: 'block' }}>Total Expected Yield</span>
+                <div style={{ fontSize: '1.8rem', color: '#fff', fontWeight: 800, lineHeight: 1.2 }}>
+                  {prediction.totalYield} <span style={{ fontSize: '0.85rem', color: 'hsl(var(--text-secondary))', fontWeight: 500 }}>Tons</span>
+                </div>
               </div>
+
               <div>
-                <span style={{ fontSize: '0.8rem', color: 'hsl(var(--text-muted))' }}>{t('avgYieldAcre')}</span>
-                <h3 style={{ fontSize: '1.8rem', color: '#52b788', marginTop: '4px', fontWeight: 800 }}>
-                  {prediction.yieldPerAcre} <span style={{ fontSize: '0.9rem', fontWeight: 500 }}>T/acre</span>
-                </h3>
+                <span style={{ fontSize: '0.72rem', color: 'hsl(var(--text-secondary))', display: 'block' }}>Avg Yield / Acre</span>
+                <div style={{ fontSize: '1.4rem', color: '#52b788', fontWeight: 800, lineHeight: 1.2 }}>
+                  {prediction.yieldPerAcre} <span style={{ fontSize: '0.75rem', fontWeight: 600 }}>Tons/Acre</span>
+                </div>
               </div>
             </div>
 
-            {/* RBF Indicators */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '16px' }}>
-              <div className="flex-between" style={{ fontSize: '0.78rem' }}>
-                <span style={{ color: 'hsl(var(--text-secondary))' }}>{t('phCompatibility')}</span>
-                <span style={{ color: prediction.phPenalty > 85 ? '#52b788' : '#ffa726', fontWeight: 600 }}>{prediction.phPenalty}% {t('efficiency')}</span>
+            {/* Financial Estimates */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+              <div style={{ background: 'rgba(82,183,136,0.04)', padding: '8px 10px', borderRadius: '8px', border: '1px solid rgba(82,183,136,0.1)' }}>
+                <span style={{ fontSize: '0.68rem', color: 'hsl(var(--text-secondary))', display: 'block' }}>Est. Gross Revenue</span>
+                <span style={{ fontSize: '0.95rem', color: '#52b788', fontWeight: 800 }}>₹{prediction.grossRevenue.toLocaleString('en-IN')}</span>
               </div>
-              <div className="flex-between" style={{ fontSize: '0.78rem' }}>
-                <span style={{ color: 'hsl(var(--text-secondary))' }}>{t('fertMultiplier')}</span>
-                <span style={{ color: '#52b788', fontWeight: 600 }}>{prediction.fertFactor}% {t('outputWeight')}</span>
+
+              <div style={{ background: 'rgba(82,183,136,0.04)', padding: '8px 10px', borderRadius: '8px', border: '1px solid rgba(82,183,136,0.1)' }}>
+                <span style={{ fontSize: '0.68rem', color: 'hsl(var(--text-secondary))', display: 'block' }}>Est. Net Profit</span>
+                <span style={{ fontSize: '0.95rem', color: '#ffa726', fontWeight: 800 }}>₹{prediction.netProfit.toLocaleString('en-IN')}</span>
               </div>
             </div>
+
+            {/* Multipliers Bar */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', background: 'rgba(255,255,255,0.02)', padding: '8px 10px', borderRadius: '6px' }}>
+              <span style={{ color: 'hsl(var(--text-secondary))' }}>
+                pH Compatibility: <strong style={{ color: prediction.phPenalty > 85 ? '#52b788' : '#ffa726' }}>{prediction.phPenalty}%</strong>
+              </span>
+              <span style={{ color: 'hsl(var(--text-secondary))' }}>
+                Fertilizer Multiplier: <strong style={{ color: '#52b788' }}>{prediction.fertFactor}%</strong>
+              </span>
+            </div>
+
           </div>
         )}
 
@@ -262,4 +246,3 @@ export default function YieldPredictor() {
     </div>
   );
 }
-

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Sprout, LayoutDashboard, Camera, Coins, Globe, LogIn, LogOut, Menu, X, FlaskConical, Calculator, Sun, Cpu, MessageCircle, Satellite, Calendar, Leaf, BookOpen, History, BarChart3, Zap, Mic } from 'lucide-react';
+import { Sprout, LayoutDashboard, Camera, Coins, Globe, LogIn, LogOut, Menu, X, FlaskConical, Calculator, Sun, Moon, Cpu, MessageCircle, Satellite, Calendar, Leaf, BookOpen, History, BarChart3, Zap, Mic, Activity } from 'lucide-react';
 
 // Component Imports
 import Dashboard from './components/Dashboard';
@@ -16,6 +16,7 @@ import AIChatAssistant from './components/AIChatAssistant';
 import ToastProvider from './components/ToastProvider';
 import SatelliteView from './components/SatelliteView';
 import PrecisionCostEstimator from './components/PrecisionCostEstimator';
+import CustomCursor from './components/CustomCursor';
 
 const BACKEND_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
   ? `${window.location.protocol}//${window.location.hostname}:10000`
@@ -24,11 +25,16 @@ const BACKEND_URL = window.location.hostname === 'localhost' || window.location.
 export default function App() {
   const { t, i18n } = useTranslation();
 
-
-  // Navigation & UI state
+  // Navigation & UI & Theme state
+  const [theme, setTheme] = useState(() => localStorage.getItem('agri_ai_theme') || 'dark');
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('agri_ai_theme', theme);
+  }, [theme]);
   
   // Shared Farm Profile State
   const [farmProfile, setFarmProfile] = useState({
@@ -106,168 +112,137 @@ export default function App() {
 
   return (
     <ToastProvider>
+      <CustomCursor />
 
     <div className="app-layout relative overflow-hidden">
       <div className="orb orb-1"></div>
       <div className="orb orb-2"></div>
       
       {/* Top Navigation Bar */}
-      <header className="navbar" style={{ justifyContent: 'space-between' }}>
+      <header className="navbar">
+        <div style={{ maxWidth: '1400px', width: '100%', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
 
-        {/* Left: Hamburger + Logo + Brand */}
-        <div className="flex-center-y flex-gap-3">
+          {/* Left: Hamburger + Logo + Brand */}
+          <div className="flex-center-y flex-gap-3">
 
-          {/* Hamburger menu button */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            style={{
-              background: isMobileMenuOpen ? 'rgba(82,183,136,0.15)' : 'rgba(82,183,136,0.08)',
-              border: '1px solid rgba(82,183,136,0.2)',
-              borderRadius: '10px',
-              width: '40px', height: '40px',
-              display: 'flex', flexDirection: 'column',
-              alignItems: 'center', justifyContent: 'center', gap: '5px',
-              cursor: 'pointer', transition: 'all 0.2s', flexShrink: 0,
-            }}
-            title="Menu"
-          >
-            {isMobileMenuOpen ? <X size={20} color="#52b788" /> : (
-              <>
-                <span style={{ width: '18px', height: '2px', background: '#52b788', borderRadius: '2px', transition: 'all 0.2s' }} />
-                <span style={{ width: '14px', height: '2px', background: '#52b788', borderRadius: '2px', transition: 'all 0.2s' }} />
-                <span style={{ width: '18px', height: '2px', background: '#52b788', borderRadius: '2px', transition: 'all 0.2s' }} />
-              </>
-            )}
-          </button>
-
-          {/* Logo image */}
-          <img
-            src="/logo.jpg"
-            alt="Agri AI Logo"
-            style={{
-              width: '64px',
-              height: '64px',
-              borderRadius: '14px',
-              objectFit: 'cover',
-              objectPosition: 'center',
-              border: '2px solid rgba(82,183,136,0.5)',
-              boxShadow: '0 0 20px rgba(82,183,136,0.35), 0 4px 12px rgba(0,0,0,0.4)',
-              flexShrink: 0,
-            }}
-          />
-
-          {/* Brand text */}
-          <div>
-            <span className="brand-title block" style={{ fontSize: '1.25rem' }}>
-              {t('brandName')}
-            </span>
-            <span className="brand-subtitle">
-              {t('brandSubtitle')}
-            </span>
-          </div>
-        </div>
-
-        {/* Middle: Horizontal Nav Links (Hidden on mobile) */}
-        <div className="header-nav-links">
-          <button 
-            className={`header-nav-link ${activeTab === 'dashboard' ? 'active' : ''}`}
-            onClick={() => handleTabChange('dashboard')}
-          >
-            <LayoutDashboard size={16} />
-            <span>{t('dashboard')}</span>
-          </button>
-          <button 
-            className={`header-nav-link ${activeTab === 'predictor' ? 'active' : ''}`}
-            onClick={() => handleTabChange('predictor')}
-          >
-            <Sprout size={16} />
-            <span>{t('cropRecommend')}</span>
-          </button>
-          <button 
-            className={`header-nav-link ${activeTab === 'fertilizer' ? 'active' : ''}`}
-            onClick={() => handleTabChange('fertilizer')}
-          >
-            <FlaskConical size={16} />
-            <span>{t('fertilizer')}</span>
-          </button>
-          <button 
-            className={`header-nav-link ${activeTab === 'yield' ? 'active' : ''}`}
-            onClick={() => handleTabChange('yield')}
-          >
-            <Calculator size={16} />
-            <span>{t('yieldPrediction')}</span>
-          </button>
-          <button 
-            className={`header-nav-link ${activeTab === 'weather' ? 'active' : ''}`}
-            onClick={() => handleTabChange('weather')}
-          >
-            <Sun size={16} />
-            <span>{t('weather')}</span>
-          </button>
-          <button 
-            className={`header-nav-link ${activeTab === 'disease' ? 'active' : ''}`}
-            onClick={() => handleTabChange('disease')}
-          >
-            <Camera size={16} />
-            <span>{t('diseaseCamera')}</span>
-          </button>
-          <button 
-            className={`header-nav-link ${activeTab === 'chat' ? 'active' : ''}`}
-            onClick={() => handleTabChange('chat')}
-          >
-            <MessageCircle size={16} />
-            <span>{t('aiChatAssistant')}</span>
-          </button>
-        </div>
-
-        {/* Right: Language + Auth */}
-        <div className="flex-center-y flex-gap-4">
-          {/* Language Selector */}
-          <div className="lang-selector">
-            <Globe size={14} className="lang-icon" />
-            <select
-              value={i18n.language}
-              onChange={(e) => {
-                const lang = e.target.value;
-                i18n.changeLanguage(lang);
-                localStorage.setItem('agri_ai_lang', lang);
-              }}
-              className="lang-select"
-            >
-              <option value="en">English (EN)</option>
-              <option value="hi">हिन्दी (HI)</option>
-              <option value="ta">தமிழ் (TA)</option>
-              <option value="bn">বাংলা (BN)</option>
-              <option value="as">অসমীয়া (AS)</option>
-            </select>
-          </div>
-
-          {/* User Auth */}
-          {user ? (
-            <div className="user-profile-badge">
-              <div className="user-avatar-container">
-                <div className="user-avatar">
-                  {user.name.charAt(0).toUpperCase()}
-                </div>
-                <div className="user-info hide-mobile">
-                  <span className="user-name">{user.name}</span>
-                  <span className="user-role">{user.role}</span>
-                </div>
-              </div>
-              <button onClick={handleLogout} className="btn-logout" title={t('logout')}>
-                <LogOut size={16} />
-              </button>
-            </div>
-          ) : (
+            {/* Hamburger menu button */}
             <button
-              onClick={() => setIsAuthModalOpen(true)}
-              className="btn-primary"
-              style={{ padding: '8px 18px', fontSize: '0.85rem' }}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              style={{
+                background: isMobileMenuOpen ? 'rgba(82,183,136,0.15)' : 'rgba(82,183,136,0.08)',
+                border: '1px solid rgba(82,183,136,0.2)',
+                borderRadius: '10px',
+                width: '40px', height: '40px',
+                display: 'flex', flexDirection: 'column',
+                alignItems: 'center', justifyContent: 'center', gap: '5px',
+                cursor: 'pointer', transition: 'all 0.2s', flexShrink: 0,
+              }}
+              title="Menu"
             >
-              <LogIn size={14} />
-              <span className="hide-mobile">{t('login')}</span>
+              {isMobileMenuOpen ? <X size={20} color="#52b788" /> : (
+                <>
+                  <span style={{ width: '18px', height: '2px', background: '#52b788', borderRadius: '2px', transition: 'all 0.2s' }} />
+                  <span style={{ width: '14px', height: '2px', background: '#52b788', borderRadius: '2px', transition: 'all 0.2s' }} />
+                  <span style={{ width: '18px', height: '2px', background: '#52b788', borderRadius: '2px', transition: 'all 0.2s' }} />
+                </>
+              )}
             </button>
-          )}
+
+            {/* Logo image */}
+            <img
+              src="/logo.jpg"
+              alt="Agri AI Logo"
+              style={{
+                width: '42px',
+                height: '42px',
+                borderRadius: '10px',
+                objectFit: 'cover',
+                objectPosition: 'center',
+                border: '1.5px solid rgba(82,183,136,0.5)',
+                boxShadow: '0 0 12px rgba(82,183,136,0.3)',
+                flexShrink: 0,
+              }}
+            />
+
+            {/* Brand text */}
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <span className="brand-title block" style={{ fontSize: '1.2rem', lineHeight: '1.15' }}>
+                {t('brandName')}
+              </span>
+              <span className="brand-subtitle" style={{ fontSize: '0.7rem', marginTop: '2px' }}>
+                {t('brandSubtitle')}
+              </span>
+            </div>
+          </div>
+
+          {/* Right: Theme Toggle + Language + Auth */}
+          <div className="flex-center-y flex-gap-3">
+            {/* Theme Toggle Button */}
+            <button
+              onClick={() => setTheme(t => t === 'dark' ? 'light' : 'dark')}
+              className="btn-secondary"
+              style={{
+                padding: '6px 12px',
+                fontSize: '0.78rem',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                borderRadius: '10px',
+                border: '1px solid rgba(82, 183, 136, 0.2)'
+              }}
+              title={theme === 'dark' ? 'Switch to Light Theme' : 'Switch to Dark Theme'}
+            >
+              {theme === 'dark' ? <Sun size={14} style={{ color: '#ffa726' }} /> : <Moon size={14} style={{ color: '#1e754a' }} />}
+              <span className="hide-mobile" style={{ fontWeight: 600 }}>{theme === 'dark' ? 'Light' : 'Dark'}</span>
+            </button>
+
+            {/* Language Selector */}
+            <div className="lang-selector">
+              <Globe size={14} className="lang-icon" />
+              <select
+                value={i18n.language}
+                onChange={(e) => {
+                  const lang = e.target.value;
+                  i18n.changeLanguage(lang);
+                  localStorage.setItem('agri_ai_lang', lang);
+                }}
+                className="lang-select"
+              >
+                <option value="en">English (EN)</option>
+                <option value="hi">हिन्दी (HI)</option>
+                <option value="ta">தமிழ் (TA)</option>
+                <option value="bn">বাংলা (BN)</option>
+                <option value="as">அসমீயா (AS)</option>
+              </select>
+            </div>
+
+            {/* User Auth */}
+            {user ? (
+              <div className="user-profile-badge">
+                <div className="user-avatar-container">
+                  <div className="user-avatar">
+                    {user.name.charAt(0).toUpperCase()}
+                  </div>
+                  <div className="user-info hide-mobile">
+                    <span className="user-name">{user.name}</span>
+                    <span className="user-role">{user.role}</span>
+                  </div>
+                </div>
+                <button onClick={handleLogout} className="btn-logout" title={t('logout')}>
+                  <LogOut size={16} />
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => setIsAuthModalOpen(true)}
+                className="btn-primary"
+                style={{ padding: '8px 18px', fontSize: '0.85rem' }}
+              >
+                <LogIn size={14} />
+                <span className="hide-mobile">{t('login')}</span>
+              </button>
+            )}
+          </div>
         </div>
       </header>
 
@@ -331,22 +306,39 @@ export default function App() {
               ]
             },
             {
-              title: "Decision & Economics",
+              title: t('navGroupPlanner') || "Interactive Farm Planner",
+              items: [
+                { id: 'profiler', icon: <Leaf size={18} />,           label: t('guidedFarmProfiler') || "Guided Farm Profiler" },
+                { id: 'weekly-planner', icon: <Calendar size={18} />,  label: t('weeklyPlanner') || "Weekly Operations Planner" },
+                { id: 'today-status', icon: <Activity size={18} />,    label: t('todayStatus') || "Today's Farm Status" },
+                { id: 'planner', icon: <Mic size={18} />,             label: t('farmerVoiceAssistant') || "Farmer Voice Assistant" },
+              ]
+            },
+            {
+              title: t('navGroupEconomics') || "Decision & Economics",
               items: [
                 { id: 'predictor', icon: <Sprout size={18} />,       label: t('cropRecommend') },
                 { id: 'fertilizer',icon: <FlaskConical size={18} />,  label: t('fertilizer') },
                 { id: 'yield',     icon: <Calculator size={18} />,    label: t('yieldPrediction') },
-                { id: 'cost-estimator', icon: <Coins size={18} />,   label: "Precision Cost & Profit Estimator" },
+                { id: 'cost-estimator', icon: <Coins size={18} />,   label: t('precisionCostEstimator') || "Precision Cost & Profit Estimator" },
               ]
             },
             {
-              title: "Monitoring & Logs",
+              title: t('navGroupMonitoring') || "Monitoring & Logs",
               items: [
                 { id: 'disease',   icon: <Camera size={18} />,        label: t('diseaseCamera') },
                 { id: 'market',    icon: <Coins size={18} />,         label: t('marketPrices') },
                 { id: 'weather',   icon: <Sun size={18} />,           label: t('weather') },
                 { id: 'iot',       icon: <Cpu size={18} />,            label: t('iotTelemetry') },
                 { id: 'satellite', icon: <Satellite size={18} />,      label: t('satelliteView') },
+              ]
+            },
+            {
+              title: t('navGroupAudits') || "Platform Audits",
+              items: [
+                { id: 'telemetry-audit', icon: <History size={18} />, label: t('historicalTelemetryAudit') || "Historical Telemetry Audit" },
+                { id: 'crop-projections', icon: <BarChart3 size={18} />,label: t('cropProjections') || "Crop Allocation & Yield Projections" },
+                { id: 'transparency', icon: <Zap size={18} />,        label: t('decisionTransparency') || "Decision Calculation Transparency" },
               ]
             }
           ].map(group => (

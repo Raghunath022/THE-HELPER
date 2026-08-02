@@ -9,6 +9,7 @@
     ]
   },
   "hosting": {
+    "site": "agri-smart-ai",
     "public": "dist",
     "ignore": [
       "firebase.json",
