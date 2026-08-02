@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SK. RAGHUNATH PORTFOLIO - STRICT RESUME MATCHING ENGINE
+   SK. RAGHUNATH PORTFOLIO - RESUME MATCHING ENGINE
    ========================================================================== */
 
 const projectsData = [
@@ -156,6 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderProjects("all");
   initFilterTabs();
   initModal();
+  initNavbar();
 });
 
 function renderProjects(filter) {
@@ -219,6 +220,7 @@ function openModal(id) {
 
   const modalBody = document.getElementById("modalBody");
   const modal = document.getElementById("projectModal");
+  if (!modalBody || !modal) return;
 
   modalBody.innerHTML = `
     <div style="font-size: 0.78rem; font-family: var(--font-code); color: var(--accent-blue-light); margin-bottom: 0.25rem;">
@@ -252,8 +254,10 @@ function openModal(id) {
 
 function closeModal() {
   const modal = document.getElementById("projectModal");
-  modal.classList.remove("active");
-  document.body.style.overflow = "auto";
+  if (modal) {
+    modal.classList.remove("active");
+    document.body.style.overflow = "auto";
+  }
 }
 
 function initModal() {
@@ -263,6 +267,17 @@ function initModal() {
   if (modal) {
     modal.addEventListener("click", (e) => {
       if (e.target === modal) closeModal();
+    });
+  }
+}
+
+function initNavbar() {
+  const menuBtn = document.getElementById("menuBtn") || document.getElementById("mobileToggle");
+  const navLinks = document.getElementById("navLinks") || document.getElementById("navMenu");
+
+  if (menuBtn && navLinks) {
+    menuBtn.addEventListener("click", () => {
+      navLinks.classList.toggle("active");
     });
   }
 }
