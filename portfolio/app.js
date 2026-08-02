@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SK. RAGHUNATH PORTFOLIO - RESUME MATCHING ENGINE
+   SK. RAGHUNATH PORTFOLIO - STRICT RESUME MATCHING ENGINE
    ========================================================================== */
 
 const projectsData = [
@@ -272,8 +272,19 @@ function initModal() {
 }
 
 function initNavbar() {
+  const navbar = document.getElementById("navbar");
   const menuBtn = document.getElementById("menuBtn") || document.getElementById("mobileToggle");
   const navLinks = document.getElementById("navLinks") || document.getElementById("navMenu");
+
+  if (navbar) {
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 40) {
+        navbar.classList.add("scrolled");
+      } else {
+        navbar.classList.remove("scrolled");
+      }
+    });
+  }
 
   if (menuBtn && navLinks) {
     menuBtn.addEventListener("click", () => {
