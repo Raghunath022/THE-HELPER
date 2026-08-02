@@ -1,23 +1,23 @@
 /* ==========================================================================
-   SK. RAGHUNATH PORTFOLIO - RESUME-OPTIMIZED PROJECT ENGINE
+   SK. RAGHUNATH PORTFOLIO - STRICT RESUME MATCHING ENGINE
    ========================================================================== */
 
 const projectsData = [
   {
     id: "sofc-thermal-fea",
     title: "SOFC Interconnect Thermal-Structural Analysis",
-    subtitle: "ANSYS Student Edition | Nonlinear Structural Simulation",
+    subtitle: "Simulation Projects (Capstone, ANSYS Student Edition)",
     category: "ansys",
-    categoryLabel: "ANSYS FEA",
-    year: "2025",
+    categoryLabel: "ANSYS Simulation",
+    year: "Capstone",
     summary: "Simulated an aluminium-coated SOFC interconnect under combined mechanical load and a 25–800°C thermal ramp.",
-    metric: "Peak Stress: 196.9 MPa → Relaxed: 80.3 MPa | Deform: 0.33 mm",
+    metric: "Confirmed design limits held (peak 196.9 MPa, relaxing to 80.3 MPa) with negligible deformation (0.33 mm).",
     bullets: [
-      "Simulated aluminium-coated SOFC interconnect under 25–800°C thermal ramp & mechanical load.",
-      "Confirmed design limits held: Peak stress of 196.9 MPa relaxed to 80.3 MPa under sustained heat.",
-      "Recorded negligible physical deformation of 0.33 mm, confirming structural integrity."
+      "Simulated an aluminium-coated SOFC interconnect under combined mechanical load and a 25–800°C thermal ramp in ANSYS Student Edition.",
+      "Confirmed design limits held: Peak stress of 196.9 MPa relaxed to 80.3 MPa under sustained high temperature.",
+      "Recorded negligible physical deformation of 0.33 mm, demonstrating structural Adhesion & material limits held."
     ],
-    tags: ["ANSYS Mechanical", "Thermal Ramp (25-800°C)", "Nonlinear FEA", "Stress Relaxation"],
+    tags: ["ANSYS Student Edition", "Nonlinear Structural", "Thermal Ramp (25-800°C)", "Peak Stress: 196.9 MPa"],
     link: null
   },
   {
@@ -26,32 +26,31 @@ const projectsData = [
     subtitle: "ANSYS Fluent | Laminar Flow CFD Modeling",
     category: "ansys",
     categoryLabel: "ANSYS CFD",
-    year: "2025",
+    year: "CFD Study",
     summary: "Modeled laminar coolant flow through a spider-biomimicked groove geometry in ANSYS Fluent.",
-    metric: "Converged Heat Transfer Across 288–308 K Surface Range",
+    metric: "Achieved stable, converged heat transfer performance across a 288–308 K surface range.",
     bullets: [
-      "Modeled laminar coolant flow through spider-biomimicked micro-channel groove geometry.",
-      "Achieved stable, converged heat transfer performance across 288–308 K surface temperature range.",
-      "Optimized flow distribution to eliminate localized surface thermal hotspots."
+      "Modeled laminar coolant flow through a spider-biomimicked channel groove geometry using ANSYS Fluent.",
+      "Achieved stable, converged heat transfer performance across a 288–308 K surface temperature range.",
+      "Optimized flow distribution to maintain uniform convective surface thermal dissipation."
     ],
-    tags: ["ANSYS Fluent", "CFD Modeling", "Laminar Flow", "Biomimetic Geometry"],
+    tags: ["ANSYS Fluent", "Laminar Flow", "Biomimetic Geometry", "288–308 K Heat Transfer"],
     link: null
   },
   {
     id: "sma-bearing-study",
     title: "Shape-Memory-Alloy (SMA) Bearing Study",
-    subtitle: "Impact Resistance & Shock Damping Simulation",
+    subtitle: "Impact Resistance Simulation",
     category: "ansys",
-    categoryLabel: "FEA Simulation",
+    categoryLabel: "Simulation",
     year: "2025–2026",
-    summary: "Ran a comparative impact-resistance simulation of conventional vs. SMA-layered bearing designs.",
-    metric: "Quantified Dynamic Damping & Impact Dissipation",
+    summary: "Ran a comparative impact-resistance simulation of a conventional bearing versus an SMA-layered design.",
+    metric: "Quantified dynamic shock dissipation and damping improvements.",
     bullets: [
-      "Executed dynamic impact simulation comparing standard steel bearing vs. SMA-layered housing.",
-      "Quantified structural shock dissipation and damping performance under high-velocity impact.",
-      "Demonstrated pseudoelastic strain recovery to mitigate bearing dynamic fatigue."
+      "Ran a comparative impact-resistance simulation of a conventional bearing versus an SMA-layered design in ANSYS.",
+      "Quantified structural shock dissipation and dynamic damping improvements under high dynamic impact loading."
     ],
-    tags: ["ANSYS Mechanical", "Shape Memory Alloys", "Impact Simulation", "Damping Analysis"],
+    tags: ["ANSYS Mechanical", "Shape Memory Alloys", "Impact Resistance", "Damping Analysis"],
     link: null
   },
   {
@@ -62,96 +61,93 @@ const projectsData = [
     categoryLabel: "Core Mechanical",
     year: "2025",
     summary: "Designed and fabricated a human-powered mountain bike frame in chromium alloy steel.",
-    metric: "Chromium Steel Frame | Gas-Spring Rear Piston Suspension",
+    metric: "Chromium Alloy Steel Frame | Gas-Spring Piston Rear Suspension",
     bullets: [
-      "Designed and fabricated mountain bike frame in chromium alloy steel, optimizing strength-to-weight ratio.",
-      "Engineered gas-spring piston rear suspension to replace conventional coil spring.",
-      "Integrated front hydraulic disc brakes for responsive dynamic braking."
+      "Designed and fabricated a human-powered mountain bike frame in chromium alloy steel, optimizing strength-to-weight ratio for repeated impact loading.",
+      "Engineered a gas-spring piston rear suspension to replace the conventional coil spring, integrated with front hydraulic disc brakes."
     ],
-    tags: ["SAE India Lead", "Chromium Alloy Steel", "Gas-Spring Suspension", "Hydraulic Brakes"],
+    tags: ["Team Lead", "SAE India", "Chromium Alloy Steel", "Gas-Spring Suspension", "Hydraulic Disc Brakes"],
     link: null
   },
   {
     id: "mechanical-fabrication",
     title: "Mechanical Components Fabrication",
-    subtitle: "Lathe Machining & Precision Welding",
+    subtitle: "Lathe Machining & Welding",
     category: "manufacturing",
     categoryLabel: "Core Mechanical",
     year: "2025–2026",
-    summary: "Manufactured a taper live center on conventional lathe and fabricated a mechanical walker.",
-    metric: "Lathe Live Center & Precision Mechanical Walker",
+    summary: "Manufactured a taper live center via conventional lathe operations and fabricated a mechanical walker.",
+    metric: "Lathe Taper Live Center & Precision Mechanical Walker",
     bullets: [
-      "Manufactured a taper live center via conventional lathe operations to precise ISO tolerances.",
-      "Fabricated a mechanical walker through precision tube cutting, welding, and surface finishing.",
-      "Verified rotational alignment and structural integrity under static load."
+      "Manufactured a taper live center via conventional lathe operations to exact dimensional tolerances.",
+      "Fabricated a mechanical walker through precision cutting, welding, and surface finishing."
     ],
-    tags: ["Lathe Operations", "Taper Turning", "Welding", "Surface Finishing"],
+    tags: ["Lathe Operations", "Taper Live Center", "Cutting & Welding", "Surface Finishing"],
     link: null
   },
   {
     id: "energis-scan",
     title: "EnergiScan — Portable Energy Diagnostic System",
-    subtitle: "Non-Invasive CT Sensor & Automated ROI Engine",
+    subtitle: "Independent Projects & Competitions",
     category: "independent",
-    categoryLabel: "IoT & Hardware",
+    categoryLabel: "Independent IoT",
     year: "2026",
-    summary: "Designed a non-invasive current-sensor diagnostic tool generating plain-language ROI reports.",
-    metric: "15-Minute On-Site Screening & ROI Report Engine",
+    summary: "Designed a non-invasive current-sensor diagnostic tool generating plain-language ROI reports within 15 mins.",
+    metric: "15-Minute On-Site Screening & Plain-Language ROI Engine",
     bullets: [
-      "Designed non-invasive current-sensor diagnostic tool for instant electrical energy audits.",
-      "Built 15-minute on-site screening workflow producing plain-language ROI reports.",
-      "Deployed live web application on Cloudflare Workers."
+      "Designed a non-invasive current-sensor diagnostic tool for electrical energy usage assessment.",
+      "Engineered on-site screening workflow generating plain-language ROI energy reports within 15 minutes.",
+      "Deployed live web diagnostic application."
     ],
-    tags: ["Current CT Sensors", "Energy Audit", "15-Min Workflow", "Cloudflare Workers"],
+    tags: ["Current Sensors", "15-Min On-Site Workflow", "Plain-Language ROI", "Cloudflare Workers"],
     link: "https://energis-scan.kavithaselvanthiran123.workers.dev/"
   },
   {
     id: "smart-axle-bearing",
     title: "Smart Axle Bearing Monitoring System",
-    subtitle: "RailHack Finalist | IoT Predictive Maintenance",
+    subtitle: "RailHack Finalist | IoT Sensor Fusion Concept",
     category: "independent",
-    categoryLabel: "IoT Competition",
+    categoryLabel: "RailHack Finalist",
     year: "2025–2026",
     summary: "Proposed an IoT sensor-fusion concept for predictive maintenance of railway axle bearings.",
     metric: "RailHack National Finalist Distinction",
     bullets: [
-      "Proposed IoT sensor-fusion system for real-time predictive maintenance of railway axle bearings.",
-      "Shortlisted as RailHack National Finalist for early thermal and acoustic failure detection concept."
+      "Proposed an IoT sensor-fusion concept for predictive maintenance of railway axle bearings.",
+      "Selected as National RailHack Finalist for real-time acoustic/thermal anomaly detection concept."
     ],
-    tags: ["RailHack Finalist", "Sensor Fusion", "Railway IoT", "Predictive Maintenance"],
+    tags: ["RailHack Finalist", "IoT Sensor Fusion", "Predictive Maintenance", "Railway Bearings"],
     link: null
   },
   {
     id: "agri-smart-ai",
-    title: "AgriSmart AI Platform",
-    subtitle: "AI Decision Support & Crop Diagnostics",
+    title: "AgriSmart AI",
+    subtitle: "Independent Projects & Competitions",
     category: "independent",
-    categoryLabel: "AI Web Application",
+    categoryLabel: "Web AI",
     year: "2026",
-    summary: "Built an intelligent agricultural web application for telemetry monitoring and crop insights.",
+    summary: "Intelligent agricultural decision-support web platform for telemetry monitoring and crop insights.",
     metric: "Live Web App Deployed on Firebase",
     bullets: [
-      "Developed precision agriculture platform with crop diagnostic decision support.",
-      "Integrated real-time soil telemetry tracking and weather analytics.",
-      "Deployed live application on Firebase Hosting."
+      "Built an intelligent decision-support web platform for smart farming and crop health monitoring.",
+      "Deployed live app accessible on Firebase Hosting."
     ],
-    tags: ["React / Web", "Firebase Hosting", "Crop AI", "Agricultural Tech"],
+    tags: ["Firebase App", "Agricultural Tech", "Crop Telemetry", "Web Platform"],
     link: "https://agri-smart-ai.web.app"
   },
   {
-    id: "telemedicine-system",
-    title: "Telemedicine Healthcare System",
-    subtitle: "Web Consultation & Patient Portal",
+    id: "telemedicine-portal",
+    title: "Telemedicine System",
+    subtitle: "Independent Projects & Competitions",
     category: "independent",
-    categoryLabel: "Web Application",
+    categoryLabel: "Web App",
     year: "2025",
-    summary: "Built a responsive telemedicine portal enabling online consultations and health tracking.",
+    summary: "Remote healthcare consultation and diagnostic portal built for digital patient management.",
     metric: "Live Web App Deployed on GitHub Pages",
     bullets: [
-      "Engineered web healthcare portal facilitating remote doctor consultations and record tracking.",
-      "Designed responsive mobile-friendly UI deployed live on GitHub Pages."
+      "Engineered web healthcare system enabling remote doctor consultations and health tracking.",
+      "Deployed live application on GitHub Pages."
     ],
-    tags: ["HTML5 / JS", "GitHub Pages", "Healthcare UI", "Patient Portal"],
+    tags: ["Healthcare UI", "GitHub Pages", "Responsive Web App"],
     link: "https://raghunath022.github.io/Telemedicine/"
   }
 ];
@@ -179,8 +175,11 @@ function renderProjects(filter) {
 
       <h3 class="p-title">${p.title}</h3>
       <div class="p-subtitle">${p.subtitle}</div>
-      <p class="p-bullet">${p.summary}</p>
       
+      <div class="p-bullet">
+        ${p.summary}
+      </div>
+
       <div class="p-metric">
         <i class="fa-solid fa-check-circle"></i> ${p.metric}
       </div>
@@ -225,14 +224,14 @@ function openModal(id) {
     <div style="font-size: 0.78rem; font-family: var(--font-code); color: var(--accent-blue-light); margin-bottom: 0.25rem;">
       ${p.categoryLabel} • ${p.year}
     </div>
-    <h2 style="font-family: var(--font-heading); font-size: 1.5rem; margin-bottom: 0.25rem;">${p.title}</h2>
-    <div style="font-size: 0.9rem; color: var(--accent-amber); margin-bottom: 1.25rem; font-weight: 500;">${p.subtitle}</div>
+    <h2 style="font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 0.25rem;">${p.title}</h2>
+    <div style="font-size: 0.88rem; color: var(--accent-amber); margin-bottom: 1.25rem; font-weight: 500;">${p.subtitle}</div>
 
     <div style="background: rgba(15, 23, 42, 0.6); border-left: 3px solid var(--accent-blue-light); padding: 0.65rem 0.85rem; font-size: 0.85rem; margin-bottom: 1.25rem; font-weight: 600;">
-      Key Metric: ${p.metric}
+      Exact Result: ${p.metric}
     </div>
 
-    <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem; color: var(--text-main);">Resume Bullet Points & Key Highlights:</h4>
+    <h4 style="font-size: 0.92rem; margin-bottom: 0.5rem; color: var(--text-main);">Resume Bullet Points:</h4>
     <ul style="padding-left: 1.1rem; color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; margin-bottom: 1.5rem;">
       ${p.bullets.map(b => `<li style="margin-bottom: 0.35rem;">${b}</li>`).join('')}
     </ul>
@@ -240,7 +239,7 @@ function openModal(id) {
     <div style="display: flex; gap: 0.75rem;">
       ${p.link ? `
         <a href="${p.link}" target="_blank" rel="noopener" class="btn btn-sm btn-primary">
-          <i class="fa-solid fa-external-link"></i> Open Live Project
+          <i class="fa-solid fa-external-link"></i> Test Live Link
         </a>
       ` : ''}
       <button class="btn btn-sm btn-outline" onclick="closeModal()">Close</button>
