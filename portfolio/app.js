@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SK. RAGHUNATH PORTFOLIO - STRICT RESUME MATCHING ENGINE
+   SK. RAGHUNATH PORTFOLIO - RESUME MATCHING ENGINE (DEFENSIVE)
    ========================================================================== */
 
 const projectsData = [
@@ -152,145 +152,177 @@ const projectsData = [
   }
 ];
 
-document.addEventListener("DOMContentLoaded", () => {
-  renderProjects("all");
-  initFilterTabs();
-  initModal();
-  initNavbar();
-});
-
 function renderProjects(filter) {
-  const grid = document.getElementById("projectsGrid");
-  if (!grid) return;
+  try {
+    const grid = document.getElementById("projectsGrid");
+    if (!grid) return;
 
-  const filtered = filter === "all" 
-    ? projectsData 
-    : projectsData.filter(p => p.category === filter);
+    const filtered = filter === "all" 
+      ? projectsData 
+      : projectsData.filter(p => p.category === filter);
 
-  grid.innerHTML = filtered.map(p => `
-    <div class="project-item">
-      <div class="p-header">
-        <span class="p-category">${p.categoryLabel}</span>
-        <span class="p-year">${p.year}</span>
+    grid.innerHTML = filtered.map(p => `
+      <div class="project-item">
+        <div class="p-header">
+          <span class="p-category">${p.categoryLabel}</span>
+          <span class="p-year">${p.year}</span>
+        </div>
+
+        <h3 class="p-title">${p.title}</h3>
+        <div class="p-subtitle">${p.subtitle}</div>
+        
+        <div class="p-bullet">
+          ${p.summary}
+        </div>
+
+        <div class="p-metric">
+          <i class="fa-solid fa-check-circle"></i> ${p.metric}
+        </div>
+
+        <div class="p-tags">
+          ${p.tags.map(t => `<span class="p-tag">${t}</span>`).join('')}
+        </div>
+
+        <div class="p-actions">
+          <button class="btn btn-sm btn-outline" onclick="openModal('${p.id}')">
+            <i class="fa-solid fa-list-check"></i> Details
+          </button>
+          ${p.link ? `
+            <a href="${p.link}" target="_blank" rel="noopener" class="btn btn-sm btn-primary">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Link
+            </a>
+          ` : ''}
+        </div>
       </div>
-
-      <h3 class="p-title">${p.title}</h3>
-      <div class="p-subtitle">${p.subtitle}</div>
-      
-      <div class="p-bullet">
-        ${p.summary}
-      </div>
-
-      <div class="p-metric">
-        <i class="fa-solid fa-check-circle"></i> ${p.metric}
-      </div>
-
-      <div class="p-tags">
-        ${p.tags.map(t => `<span class="p-tag">${t}</span>`).join('')}
-      </div>
-
-      <div class="p-actions">
-        <button class="btn btn-sm btn-outline" onclick="openModal('${p.id}')">
-          <i class="fa-solid fa-list-check"></i> Details
-        </button>
-        ${p.link ? `
-          <a href="${p.link}" target="_blank" rel="noopener" class="btn btn-sm btn-primary">
-            <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Link
-          </a>
-        ` : ''}
-      </div>
-    </div>
-  `).join('');
+    `).join('');
+  } catch (err) {
+    console.error("renderProjects error:", err);
+  }
 }
 
 function initFilterTabs() {
-  const btns = document.querySelectorAll(".filter-btn");
-  if (!btns.length) return;
+  try {
+    const btns = document.querySelectorAll(".filter-btn");
+    if (!btns || !btns.length) return;
 
-  btns.forEach(btn => {
-    btn.addEventListener("click", () => {
-      btns.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      renderProjects(btn.getAttribute("data-filter"));
+    btns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        btns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        renderProjects(btn.getAttribute("data-filter"));
+      });
     });
-  });
+  } catch (err) {
+    console.error("initFilterTabs error:", err);
+  }
 }
 
 function openModal(id) {
-  const p = projectsData.find(item => item.id === id);
-  if (!p) return;
+  try {
+    const p = projectsData.find(item => item.id === id);
+    if (!p) return;
 
-  const modalBody = document.getElementById("modalBody");
-  const modal = document.getElementById("projectModal");
-  if (!modalBody || !modal) return;
+    const modalBody = document.getElementById("modalBody");
+    const modal = document.getElementById("projectModal");
+    if (!modalBody || !modal) return;
 
-  modalBody.innerHTML = `
-    <div style="font-size: 0.78rem; font-family: var(--font-code); color: var(--accent-blue-light); margin-bottom: 0.25rem;">
-      ${p.categoryLabel} • ${p.year}
-    </div>
-    <h2 style="font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 0.25rem;">${p.title}</h2>
-    <div style="font-size: 0.88rem; color: var(--accent-amber); margin-bottom: 1.25rem; font-weight: 500;">${p.subtitle}</div>
+    modalBody.innerHTML = `
+      <div style="font-size: 0.78rem; font-family: var(--font-code); color: var(--accent-blue-light); margin-bottom: 0.25rem;">
+        ${p.categoryLabel} • ${p.year}
+      </div>
+      <h2 style="font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 0.25rem;">${p.title}</h2>
+      <div style="font-size: 0.88rem; color: var(--accent-amber); margin-bottom: 1.25rem; font-weight: 500;">${p.subtitle}</div>
 
-    <div style="background: rgba(15, 23, 42, 0.6); border-left: 3px solid var(--accent-blue-light); padding: 0.65rem 0.85rem; font-size: 0.85rem; margin-bottom: 1.25rem; font-weight: 600;">
-      Exact Result: ${p.metric}
-    </div>
+      <div style="background: rgba(15, 23, 42, 0.6); border-left: 3px solid var(--accent-blue-light); padding: 0.65rem 0.85rem; font-size: 0.85rem; margin-bottom: 1.25rem; font-weight: 600;">
+        Exact Result: ${p.metric}
+      </div>
 
-    <h4 style="font-size: 0.92rem; margin-bottom: 0.5rem; color: var(--text-main);">Resume Bullet Points:</h4>
-    <ul style="padding-left: 1.1rem; color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; margin-bottom: 1.5rem;">
-      ${p.bullets.map(b => `<li style="margin-bottom: 0.35rem;">${b}</li>`).join('')}
-    </ul>
+      <h4 style="font-size: 0.92rem; margin-bottom: 0.5rem; color: var(--text-main);">Resume Bullet Points:</h4>
+      <ul style="padding-left: 1.1rem; color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; margin-bottom: 1.5rem;">
+        ${p.bullets.map(b => `<li style="margin-bottom: 0.35rem;">${b}</li>`).join('')}
+      </ul>
 
-    <div style="display: flex; gap: 0.75rem;">
-      ${p.link ? `
-        <a href="${p.link}" target="_blank" rel="noopener" class="btn btn-sm btn-primary">
-          <i class="fa-solid fa-external-link"></i> Test Live Link
-        </a>
-      ` : ''}
-      <button class="btn btn-sm btn-outline" onclick="closeModal()">Close</button>
-    </div>
-  `;
+      <div style="display: flex; gap: 0.75rem;">
+        ${p.link ? `
+          <a href="${p.link}" target="_blank" rel="noopener" class="btn btn-sm btn-primary">
+            <i class="fa-solid fa-external-link"></i> Test Live Link
+          </a>
+        ` : ''}
+        <button class="btn btn-sm btn-outline" onclick="closeModal()">Close</button>
+      </div>
+    `;
 
-  modal.classList.add("active");
-  document.body.style.overflow = "hidden";
+    modal.classList.add("active");
+    document.body.style.overflow = "hidden";
+  } catch (err) {
+    console.error("openModal error:", err);
+  }
 }
 
 function closeModal() {
-  const modal = document.getElementById("projectModal");
-  if (modal) {
-    modal.classList.remove("active");
-    document.body.style.overflow = "auto";
+  try {
+    const modal = document.getElementById("projectModal");
+    if (modal) {
+      modal.classList.remove("active");
+      document.body.style.overflow = "auto";
+    }
+  } catch (err) {
+    console.error("closeModal error:", err);
   }
 }
 
 function initModal() {
-  const modal = document.getElementById("projectModal");
-  const closeBtn = document.getElementById("modalClose");
-  if (closeBtn) closeBtn.addEventListener("click", closeModal);
-  if (modal) {
-    modal.addEventListener("click", (e) => {
-      if (e.target === modal) closeModal();
-    });
+  try {
+    const modal = document.getElementById("projectModal");
+    const closeBtn = document.getElementById("modalClose");
+    if (closeBtn) closeBtn.addEventListener("click", closeModal);
+    if (modal) {
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) closeModal();
+      });
+    }
+  } catch (err) {
+    console.error("initModal error:", err);
   }
 }
 
 function initNavbar() {
-  const navbar = document.getElementById("navbar");
-  const menuBtn = document.getElementById("menuBtn") || document.getElementById("mobileToggle");
-  const navLinks = document.getElementById("navLinks") || document.getElementById("navMenu");
+  try {
+    const navbar = document.getElementById("navbar");
+    if (navbar) {
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 40) {
+          navbar.classList.add("scrolled");
+        } else {
+          navbar.classList.remove("scrolled");
+        }
+      });
+    }
 
-  if (navbar) {
-    window.addEventListener("scroll", () => {
-      if (window.scrollY > 40) {
-        navbar.classList.add("scrolled");
-      } else {
-        navbar.classList.remove("scrolled");
-      }
-    });
-  }
+    const menuBtn = document.getElementById("menuBtn") || document.getElementById("mobileToggle");
+    const navLinks = document.getElementById("navLinks") || document.getElementById("navMenu");
 
-  if (menuBtn && navLinks) {
-    menuBtn.addEventListener("click", () => {
-      navLinks.classList.toggle("active");
-    });
+    if (menuBtn && navLinks) {
+      menuBtn.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+      });
+    }
+  } catch (err) {
+    console.error("initNavbar error:", err);
   }
+}
+
+// Execute initial load safely
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", () => {
+    renderProjects("all");
+    initFilterTabs();
+    initModal();
+    initNavbar();
+  });
+} else {
+  renderProjects("all");
+  initFilterTabs();
+  initModal();
+  initNavbar();
 }
