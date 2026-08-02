@@ -8,7 +8,6 @@
   --font-code: 'Fira Code', monospace;
 
   /* Executive Dark Palette */
-  --bg-dark: #0B132B;
   --bg-main: #0F172A;
   --bg-card: #1E293B;
   --bg-card-hover: #27374D;
@@ -16,7 +15,6 @@
 
   --border-color: #334155;
   --border-light: #475569;
-  --border-active: #3B82F6;
 
   --text-main: #F8FAFC;
   --text-muted: #94A3B8;
@@ -46,8 +44,8 @@ html {
 
 body {
   font-family: var(--font-body);
-  background-color: var(--bg-main);
-  color: var(--text-main);
+  background-color: var(--bg-main) !important;
+  color: var(--text-main) !important;
   line-height: 1.6;
   overflow-x: hidden;
 }
@@ -105,24 +103,24 @@ body {
 }
 
 .btn-primary {
-  background: var(--accent-blue);
-  color: #FFFFFF;
+  background: var(--accent-blue) !important;
+  color: #FFFFFF !important;
 }
 
 .btn-primary:hover {
-  background: var(--accent-blue-hover);
+  background: var(--accent-blue-hover) !important;
 }
 
 .btn-outline {
-  background: transparent;
-  border-color: var(--border-color);
-  color: var(--text-main);
+  background: transparent !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-main) !important;
 }
 
 .btn-outline:hover {
-  border-color: var(--accent-blue-light);
-  color: var(--accent-blue-light);
-  background: rgba(59, 130, 246, 0.08);
+  border-color: var(--accent-blue-light) !important;
+  color: var(--accent-blue-light) !important;
+  background: rgba(59, 130, 246, 0.08) !important;
 }
 
 .btn-sm {
@@ -153,6 +151,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
 }
 
 .nav-brand {
@@ -201,6 +200,12 @@ body {
   color: var(--accent-blue-light);
 }
 
+.nav-cta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 .menu-btn {
   display: none;
   background: none;
@@ -218,11 +223,11 @@ body {
 }
 
 .hero-container {
-  display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: 2.5rem;
-  align-items: center;
-  margin-bottom: 3rem;
+  display: grid !important;
+  grid-template-columns: 1.1fr 0.9fr !important;
+  gap: 2.5rem !important;
+  align-items: center !important;
+  margin-bottom: 3rem !important;
 }
 
 .academic-badge {
@@ -272,9 +277,9 @@ body {
 
 /* HERO SUMMARY CARD */
 .candidate-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-md) !important;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
@@ -332,18 +337,18 @@ body {
 
 /* STATS GRID */
 .stats-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.25rem;
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 1.25rem !important;
   padding-top: 1.5rem;
   border-top: 1px solid var(--border-color);
 }
 
 .stat-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  padding: 1.15rem;
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-sm) !important;
+  padding: 1.15rem !important;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -804,28 +809,28 @@ body {
   color: var(--text-main);
 }
 
-/* RESPONSIVE DESIGN */
+/* RESPONSIVE BREAKPOINTS */
 @media (max-width: 992px) {
   .hero-container, .contact-box {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
   }
   .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr) !important;
   }
   .overview-grid, .projects-grid, .skills-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr) !important;
   }
 }
 
 @media (max-width: 640px) {
   .overview-grid, .projects-grid, .skills-grid, .stats-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
   }
   .hero-name {
     font-size: 2.25rem;
   }
   .timeline-card {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
     gap: 0.4rem;
   }
   .nav-links {
