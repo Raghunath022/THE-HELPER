@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SK. RAGHUNATH PORTFOLIO - RESUME MATCHING ENGINE (DEFENSIVE)
+   SK. RAGHUNATH PORTFOLIO - STRICT RESUME MATCHING ENGINE
    ========================================================================== */
 
 const projectsData = [
